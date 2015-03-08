@@ -8,7 +8,7 @@ Obviously we recommend reading through that script before actually running it.
 
 # Configuration
 
-After installing you should add the following lines to your bash or zsh configuration files (usually ~/.bash_profile or ~/.zshrc)
+After installing you should add the following lines to your bash or zsh configuration files (usually `~/.bash_profile` or `~/.zshrc`)
 
     export GEM_HOME=~/.calabash
     export GEM_PATH=~/.calabash
