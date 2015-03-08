@@ -15,3 +15,12 @@ After installing you should add the following lines to your bash or zsh configur
     export PATH="$PATH:$HOME/.calabash/bin"
 
 Then restart the terminal or source the appropriate configuration file.
+
+# Using bundler
+
+You can download the sample Gemfile with this command 
+
+
+    curl -fsSL https://raw.githubusercontent.com/calabash/install/master/Gemfile -o Gemfile
+    
+Copy the Gemfile to the directory where you want to keep your Calabash tests and run the command `bundle install`.
