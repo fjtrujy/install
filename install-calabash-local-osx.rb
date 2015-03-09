@@ -22,7 +22,7 @@ ENV['GEM_HOME'] = target_dir
 ENV['GEM_PATH'] = target_dir
 ENV['PATH'] = "#{File.join(target_dir,'bin')}:#{ENV['PATH']}"
 
-target_gems = %w(calabash-android calabash-cucumber).join " "
+target_gems = %w(calabash-android calabash-cucumber xamarin-test-cloud).join " "
 install_opts = "--no-ri --no-rdoc"
 env = "GEM_HOME=~/.calabash"
 install_cmd = "#{env} gem install #{target_gems} #{install_opts}"
