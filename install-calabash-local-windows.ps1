@@ -31,12 +31,10 @@ else
 	Write-Host "  Installing xamarin-test-cloud..."
 	& "gem" "install" "xamarin-test-cloud" "--platform=ruby"  "--no-ri" "--no-rdoc"
 	Write-Host " "
-	Write-Host $installXTC
 
 	Write-Host "  Installing calabash-android..."
 	& "gem" "install" "calabash-android" "--platform=ruby"  "--no-ri" "--no-rdoc"
 	Write-Host " "
-	Write-Host $installCalabashAndroid
 }
 
 
