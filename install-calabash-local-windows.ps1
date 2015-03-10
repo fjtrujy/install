@@ -14,7 +14,13 @@ else
 {
 	New-Item $calabashDir -ItemType directory | Out-Null
 	Write-Host "  Creating the Calabash directory at $calabashDir"	
-	
+
+# Not sure we need/should do this on Windows.	
+#	[Environment]::SetEnvironmentVariable("GEM_HOME", $calabashDir, "user")
+#	[Environment]::SetEnvironmentVariable("GEM_PATH", $calabashDir, "user")
+#	Write-Host "  Setting GEM_HOME and GEM_PATH to $calabashDir."
+
+
 	# STEP 3: Download the SSL Certificate and set the SSL_CERT_FILE 
 	# environment variable for the process.
 	$cacertFile = "$calabashDir\cacert.pem"
