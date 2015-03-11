@@ -25,7 +25,7 @@ else
 	# environment variable for the process.
 	$cacertFile = "$calabashDir\cacert.pem"
 	Invoke-WebRequest 'http://curl.haxx.se/ca/cacert.pem' -OutFile $cacertFile
-	[Environment]::SetEnvironmentVariable("SSL_CERT_FILE", $cacertFile, "Process")
+	[Environment]::SetEnvironmentVariable("SSL_CERT_FILE", $cacertFile, "user")
 
 	# STEP 4: Install the gem
 	Write-Host "  Installing xamarin-test-cloud..."
