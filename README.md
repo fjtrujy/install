@@ -36,3 +36,4 @@ Copy the Gemfile to the directory where you want to keep your Calabash tests and
 
 You must first have [Ruby installed](http://rubyinstaller.org/) along with the RubyInstaller DevKit installed. Once you have this done, download the Powershell script `install-calabash-local-windows.ps1` and run it using Powershell.
 
+You must also have the Android SDK installed and the `ANDROID_HOME` environment variable set.
