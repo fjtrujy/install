@@ -56,7 +56,7 @@ puts <<EOF
 
 export GEM_HOME="${HOME}/.calabash/gems"
 export GEM_PATH="${HOME}/.calabash/gems"
-export PATH="${PATH}:${HOME}/.calabash/gems/bin"
+export PATH="${HOME}/.calabash/gems/bin:${PATH}"
 
 EOF
 exit(true)
