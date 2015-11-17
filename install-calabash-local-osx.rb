@@ -49,14 +49,16 @@ puts "\nYou can always uninstall by deleting #{gem_dir}"
 
 puts "\n\e[#{35}m### Installation done. Please configure environment ###\e[0m"
 
-puts ""
-puts "Run these commands to setup your env in this shell (or add to ~/.bash_profile or ~/.zshrc and restart the shell)"
 
 puts <<EOF
+
+Run these commands to setup your environment in this shell:
 
 export GEM_HOME="${HOME}/.calabash/gems"
 export GEM_PATH="${HOME}/.calabash/gems"
 export PATH="${HOME}/.calabash/gems/bin:${PATH}"
+
+Or add to them to your ~/.bash_profile or ~/.zshrc and restart the shell."
 
 EOF
 
