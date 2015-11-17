@@ -22,7 +22,6 @@ if File.directory?(gem_dir)
   end
 end
 
-old_env = ENV.to_hash
 ENV['GEM_HOME'] = gem_dir
 ENV['GEM_PATH'] = gem_dir
 ENV['PATH'] = "#{File.join(gem_dir,'bin')}:#{ENV['PATH']}"
