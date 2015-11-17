@@ -2,33 +2,38 @@
 require 'fileutils'
 require 'open3'
 
-target_dir = File.expand_path("~/.calabash")
+dot_dir = File.expand_path("~/.calabash")
 
-if File.directory?(target_dir)
-  puts "Warning: #{target_dir} already exists."
-  puts "Do you want to delete #{target_dir}? (y/n)"
+# Ensure ~/.calabash exists.
+FileUtils.mkdir_p(dot_dir)
+
+gem_dir = File.join(dot_dir, "gems")
+
+if File.directory?(gem_dir)
+  puts "Warning: #{gem_dir} already exists."
+  puts "Do you want to delete #{gem_dir}? (y/n)"
   answer = STDIN.gets.chomp
   if answer == 'y'
-    puts "OK, I'll delete #{target_dir} and proceed with install..."
-    FileUtils.rm_rf target_dir
+    puts "OK, I'll delete #{gem_dir} and proceed with install..."
+    FileUtils.rm_rf gem_dir
   else
-    puts "OK, I'll not touch #{target_dir}... Aborting."
-    exit(false)
+    puts "OK, I'll not touch #{gem_dir}... Aborting."
+    exit(1)
   end
 end
 
 old_env = ENV.to_hash
-ENV['GEM_HOME'] = target_dir
-ENV['GEM_PATH'] = target_dir
-ENV['PATH'] = "#{File.join(target_dir,'bin')}:#{ENV['PATH']}"
+ENV['GEM_HOME'] = gem_dir
+ENV['GEM_PATH'] = gem_dir
+ENV['PATH'] = "#{File.join(gem_dir,'bin')}:#{ENV['PATH']}"
 
 target_gems = %w(calabash-android calabash-cucumber xamarin-test-cloud).join " "
 install_opts = "--no-ri --no-rdoc"
-env = "GEM_HOME=~/.calabash"
+env = "GEM_HOME=#{gem_dir}"
 install_cmd = "#{env} gem install #{target_gems} #{install_opts}"
 
-puts "Creating #{target_dir}."
-FileUtils.mkdir target_dir
+puts "Creating #{gem_dir}."
+FileUtils.mkdir gem_dir
 
 puts "Installing Calabash... This will take a few minutes"
 puts "Running:\n #{install_cmd}"
@@ -44,7 +49,7 @@ unless status.success?
 end
 
 puts "Done Installing!"
-puts "\nYou can always uninstall by deleting #{target_dir}"
+puts "\nYou can always uninstall by deleting #{gem_dir}"
 
 
 puts "\n\e[#{35}m### Installation done. Please configure environment ###\e[0m"
@@ -54,9 +59,10 @@ puts "Run these commands to setup your env in this shell (or add to ~/.bash_prof
 
 puts <<EOF
 
-export GEM_HOME=~/.calabash
-export GEM_PATH=~/.calabash
-export PATH="$PATH:$HOME/.calabash/bin"
+export GEM_HOME=~/.calabash/gems
+export GEM_PATH=~/.calabash/gems
+export PATH="$PATH:$HOME/.calabash/gems/bin"
 
 EOF
 exit(true)
+
