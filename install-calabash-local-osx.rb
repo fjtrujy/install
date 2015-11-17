@@ -17,8 +17,8 @@ if File.directory?(gem_dir)
     puts "OK, I'll delete #{gem_dir} and proceed with install..."
     FileUtils.rm_rf gem_dir
   else
-    puts "OK, I'll not touch #{gem_dir}... Aborting."
-    exit(1)
+    puts "OK, I'll not touch #{gem_dir}...Exiting."
+    exit(2)
   end
 end
 
