@@ -23,7 +23,7 @@ if File.directory?(gem_dir)
 end
 
 target_gems = %w(calabash-android calabash-cucumber xamarin-test-cloud).join " "
-install_opts = "--no-ri --no-rdoc"
+install_opts = "--no-document --no-prerelease"
 env = "GEM_HOME=\"#{gem_dir}\" GEM_PATH=\"#{gem_dir}\""
 install_cmd = "#{env} gem install #{target_gems} #{install_opts}"
 
