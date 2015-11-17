@@ -22,13 +22,9 @@ if File.directory?(gem_dir)
   end
 end
 
-ENV['GEM_HOME'] = gem_dir
-ENV['GEM_PATH'] = gem_dir
-ENV['PATH'] = "#{File.join(gem_dir,'bin')}:#{ENV['PATH']}"
-
 target_gems = %w(calabash-android calabash-cucumber xamarin-test-cloud).join " "
 install_opts = "--no-ri --no-rdoc"
-env = "GEM_HOME=#{gem_dir}"
+env = "GEM_HOME=\"#{gem_dir}\" GEM_PATH=\"#{gem_dir}\""
 install_cmd = "#{env} gem install #{target_gems} #{install_opts}"
 
 puts "Creating #{gem_dir}."
@@ -58,9 +54,9 @@ puts "Run these commands to setup your env in this shell (or add to ~/.bash_prof
 
 puts <<EOF
 
-export GEM_HOME=~/.calabash/gems
-export GEM_PATH=~/.calabash/gems
-export PATH="$PATH:$HOME/.calabash/gems/bin"
+export GEM_HOME="${HOME}/.calabash/gems"
+export GEM_PATH="${HOME}/.calabash/gems"
+export PATH="${PATH}:${HOME}/.calabash/gems/bin"
 
 EOF
 exit(true)
