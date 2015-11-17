@@ -59,5 +59,6 @@ export GEM_PATH="${HOME}/.calabash/gems"
 export PATH="${HOME}/.calabash/gems/bin:${PATH}"
 
 EOF
-exit(true)
+
+exit(0)
 
