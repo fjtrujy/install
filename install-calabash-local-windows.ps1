@@ -16,55 +16,61 @@ if ([String]::IsNullOrWhiteSpace($androidHome))
 }
 else 
 {
-	Write-Host "  "
 	Write-Host "  Detected the Android SDK at $androidHome."
 }
 Write-Host "  "
 
-$calabashDir = "$env:USERPROFILE\calabash\"
-if (Test-Path $calabashDir)
+# STEP 3: Create the Calabash directory if required.
+$calabashDir = "$env:USERPROFILE\.calabash"
+if (!(Test-Path $calabashDir)) 
 {
-	Write-Host " "
-	Write-Host "The directory $calabashDir already exists - aborting install."
-	Write-Host "If you want to run this script again, please delete that directory."
-	Write-Host " "
-}
-else 
-{
-	# STEP 3: Create the Calabash directory.
 	Write-Host "  Creating the Calabash directory at $calabashDir."	
 	New-Item $calabashDir -ItemType directory | Out-Null
 	Write-Host " "
-
-	# STEP 4: Download the SSL Certificate and set the SSL_CERT_FILE 
-	# environment variable for the process.
-	$cacertFile = "$calabashDir\cacert.pem"
-	Write-Host "  Downloading SSL certificate to $cacertFile."
-	Invoke-WebRequest 'http://curl.haxx.se/ca/cacert.pem' -OutFile $cacertFile
-	Write-Host " "
-
-	Write-Host "  Set the environment variable SSL_CERT_FILE=$cacertFile."
-	[Environment]::SetEnvironmentVariable("SSL_CERT_FILE", $cacertFile, "user")
-	[Environment]::SetEnvironmentVariable("SSL_CERT_FILE", $cacertFile, "process")
-	Write-Host " "
-
-	# STEP 5: Update the version of RubyGems 
-	Write-Host "  Performing a system update of RubyGems:"
-	& "gem" "update" "--system"
-	Write-Host " "
-
-	# STEP 6: Install the gems
-	Write-Host "    Installing ffi..."
-	& "gem" "install" "ffi" "--platform=ruby" "--no-ri" "--no-rdoc"
-	Write-Host " "
-	
-	Write-Host "    Installing xamarin-test-cloud..."
-	& "gem" "install" "xamarin-test-cloud" "--platform=ruby"  "--no-ri" "--no-rdoc"
-	Write-Host " "
-
-	Write-Host "    Installing calabash-android..."
-	& "gem" "install" "calabash-android" "--platform=ruby"  "--no-ri" "--no-rdoc"
-	Write-Host " "
-
-	Write-Host "Finished installing Calabash on Windows."
 }
+
+# STEP 4: Get the SSL certificates directory
+$rubygems = iex "gem which rubygems"
+if (!($rubygems.EndsWith("rubygems.rb")))
+{
+    Write-Host " "
+    Write-Host "  Unable to locate rubygems install directory!  Exiting..."
+    Write-Host " "
+    Exit
+}
+$rubygemsDir = $rubygems.Substring(0, $rubygems.Length - 3)
+$sslCertsDir = "$rubygemsDir\ssl_certs"
+
+# STEP 5: Download the SSL Certificate if required.
+$cacertFile = "$sslCertsDir\AddTrustExternalCARoot.pem"
+if (!(Test-Path $cacertFile))
+{
+    Write-Host "  Downloading SSL certificate to $cacertFile."
+    Invoke-WebRequest 'https://github.com/rubygems/rubygems/raw/master/lib/rubygems/ssl_certs/AddTrustExternalCARoot.pem' -OutFile $cacertFile
+    Write-Host " "
+}
+
+# STEP 6: Update the version of RubyGems 
+Write-Host "  Performing a system update of RubyGems:"
+& "gem" "update" "--system"
+Write-Host " "
+
+# STEP 7: Install the gems
+Write-Host "  Installing Calabash... This could take a few minutes"
+Write-Host " "
+
+Write-Host "    Installing xamarin-test-cloud..."
+& "gem" "install" "xamarin-test-cloud" "--platform=ruby"  "--no-document"
+Write-Host " "
+
+Write-Host "    Installing calabash-android..."
+& "gem" "install" "calabash-android" "--platform=ruby"  "--no-document"
+Write-Host " "
+
+Write-Host "Done Installing!"
+Write-Host " "
+Write-Host "You can always uninstall using:"
+Write-Host " "
+Write-Host "  gem uninstall xamarin-test-cloud"
+Write-Host "  gem uninstall calabash-android"
+
