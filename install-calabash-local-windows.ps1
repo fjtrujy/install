@@ -1,5 +1,3 @@
-Param([switch]$ReplaceCalabashUserFiles)
-
 Write-Host ' '
 Write-Host 'Installing Calabash on Windows:'
 Write-Host " "
