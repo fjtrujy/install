@@ -1,0 +1,11 @@
+(.*/)?\#[^/]*\#$
+*~
+*.swp
+tmp
+.DS_Store
+__MACOSX
+.idea
+.irb-history
+.ruby-version
+.pry-history
+
