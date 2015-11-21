@@ -26,7 +26,7 @@ def tool_installed?(name)
   $?.exitstatus == 0
 end
 
-# Some installs of rbenv or rvm have a . _file_.
+# IIRC, some installs of rbenv or rvm have a dot _file_.
 def tool_dot_dir?(name)
   File.exist?(File.join(home_dir, ".#{name}"))
 end
@@ -91,12 +91,58 @@ https://rvm.io/
   exit(EXIT_CODES[:rvm_installed])
 end
 
-dot_dir = File.expand_path("~/.calabash")
+GEM_INSTALL_DIRS = ["bin", "build_info", "cache", "doc", "gems", "specifications"]
 
-# Ensure ~/.calabash exists.
-FileUtils.mkdir_p(dot_dir)
+DOT_CALABASH_DIR = File.expand_path(File.join(home_dir, ".calabash"))
 
-gem_dir = File.join(dot_dir, "gems")
+def version1_script_was_run?
+  return false if !File.exist?(DOT_CALABASH_DIR)
+
+  GEM_INSTALL_DIRS.map do |dir|
+    File.exist?(File.join(DOT_CALABASH_DIR, dir))
+  end.all?
+end
+
+if version1_script_was_run?
+  @version1_script_was_run = true
+  puts %Q{
+It looks like you ran version 1.0 of this script.
+
+Moving files from the old install to:
+
+#{DOT_CALABASH_DIR}/version-1.0-install.bak
+
+You can delete these files later if you want.
+
+$ rm -rf "#{DOT_CALABASH_DIR}/version-1.0-install.bak"
+
+}
+
+  target_dir = File.join(DOT_CALABASH_DIR, "version-1.0-install.bak")
+  FileUtils.rm_rf(target_dir)
+  FileUtils.mkdir_p(target_dir)
+  GEM_INSTALL_DIRS.each do |dir|
+    source = File.join(DOT_CALABASH_DIR, dir)
+    FileUtils.mv(source, File.join(target_dir, "/"))
+  end
+else
+  @version1_script_was_run = false
+end
+
+FileUtils.mkdir_p(DOT_CALABASH_DIR)
+
+gem_dir = File.join(DOT_CALABASH_DIR, "gems")
+
+if ARGV[0] == "skip-install"
+  puts %Q{
+Finished preparing
+
+  #{DOT_CALABASH_DIR}
+
+Skipping installation.
+}
+  exit(0)
+end
 
 if File.directory?(gem_dir)
   puts "Warning: #{gem_dir} already exists."
