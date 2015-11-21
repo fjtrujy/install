@@ -14,8 +14,9 @@ function banner {
   echo ""
 }
 
-
-TMP_DIR=$(mktemp -d -t calabash-installer)
+TMP_DIR="${PWD}/tmp/test/$0"
+rm -rf "${TMP_DIR}"
+mkdir -p "${TMP_DIR}"
 
 banner "Test for rvm executable"
 
