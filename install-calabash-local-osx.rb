@@ -2,6 +2,95 @@
 require 'fileutils'
 require 'open3'
 
+EXIT_CODES = {
+  rbenv_installed: 10,
+  rvm_installed: 11
+}
+
+def home_dir
+  # Find the home directory can be problematic.
+  #
+  # This is the preferred method:
+  require 'etc'
+  preferred = Etc.getpwuid.dir
+
+  # We need this so we can test this script. If
+  # it exists, we respect it.
+  home = ENV["HOME"]
+
+  home || preferred
+end
+
+def tool_installed?(name)
+  `hash #{name} 2>/dev/null`
+  $?.exitstatus == 0
+end
+
+# Some installs of rbenv or rvm have a . _file_.
+def tool_dot_dir?(name)
+  File.exist?(File.join(home_dir, ".#{name}"))
+end
+
+def managed_ruby_installed?(name)
+  if tool_installed?(name)
+    :available
+  elsif tool_dot_dir?(name)
+    :dot_dir
+  else
+    false
+  end
+end
+
+def rbenv_installed?
+  managed_ruby_installed?("rbenv")
+end
+
+def rvm_installed?
+  managed_ruby_installed?("rvm")
+end
+
+rbenv = rbenv_installed?
+
+if rbenv
+  case rbenv
+  when :available
+    message = "Detected that rbenv is installed."
+  when :dot_dir
+    message = "Detected a ~/.rbenv directory or file."
+  end
+
+  puts %Q{
+#{message}  You should not run this script.
+
+For more information about rbenv see:
+
+https://github.com/sstephenson/rbenv
+
+}
+  exit(EXIT_CODES[:rbenv_installed])
+end
+
+rvm = rvm_installed?
+
+if rvm
+  case rvm
+  when :available
+    message = "Detected that rvm is installed."
+  when :dot_dir
+    message = "Detected a ~/.rvm directory or file."
+  end
+
+  puts %Q{
+#{message}  You should not run this script.
+
+For more information about rvm see:
+
+https://rvm.io/
+
+}
+  exit(EXIT_CODES[:rvm_installed])
+end
+
 dot_dir = File.expand_path("~/.calabash")
 
 # Ensure ~/.calabash exists.
