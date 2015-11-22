@@ -31,14 +31,13 @@ mkdir -p "${DOT_DIR}/doc"
 mkdir -p "${DOT_DIR}/gems"
 mkdir -p "${DOT_DIR}/specifications"
 
-# Need /usr/bin/ruby
 HOME="${TMP_DIR}" \
   GEM_HOME="" GEM_PATH="" \
   ./install-calabash-local-osx.rb skip-install skip-managed-ruby-check
 
 STATUS=$?
 
-if [ "${STATUS}" = "0" ]; then
+if [ "${STATUS}" = "20" ]; then
   pass "Script finished preparing without an error"
 else
   fail "Script failed to prepare."

@@ -2,9 +2,23 @@
 require 'fileutils'
 require 'open3'
 
+# Just do the checks and prepare to install, then exit.
+def skip_install?
+  ARGV.include?("skip-install")
+end
+
+# Disable managed ruby checks; good for testing environments
+# where rbenv or rvm are installed.
+def skip_managed_ruby_check?
+  ARGV.include?("skip-managed-ruby-check")
+end
+
 EXIT_CODES = {
   rbenv_installed: 10,
-  rvm_installed: 11
+  rvm_installed: 11,
+  skipped_install: 20,
+  previous_installation_detected: 30,
+  invalid_input: 40
 }
 
 def home_dir
@@ -47,10 +61,6 @@ end
 
 def rvm_installed?
   managed_ruby_installed?("rvm")
-end
-
-def skip_managed_ruby_check?
-  ARGV.include?("skip-managed-ruby-check")
 end
 
 rbenv = rbenv_installed?
@@ -135,7 +145,7 @@ end
 
 FileUtils.mkdir_p(DOT_CALABASH_DIR)
 
-if ARGV.include?("skip-install")
+if skip_install?
   puts %Q{
 Finished preparing:
 
@@ -143,21 +153,59 @@ Finished preparing:
 
 Skipping installation.
 }
-  exit(0)
+  exit(EXIT_CODES[:skipped_install])
 end
 
 GEM_INSTALL_DIR = File.join(DOT_CALABASH_DIR, "calabash-gems")
 
+def yes_or_no(question, default)
+  if default == "y"
+    suffix = "(Y/n)"
+  else
+    suffix = "(y/N)"
+  end
+
+  user_input = [(print "#{question} #{suffix} "), STDIN.gets.chomp][1]
+  answer = user_input.strip.downcase.chars[0]
+
+  if answer == "" || answer == nil
+    if default == "y"
+      "y"
+    else
+      "n"
+    end
+  else
+    if answer == "y" || answer == "n"
+      answer
+    else
+      puts "Invalid input: '#{user_input}'; please answer 'y' or 'n'"
+      exit(EXIT_CODES[:invalid_input])
+    end
+  end
+end
+
 if File.directory?(GEM_INSTALL_DIR)
-  puts "Warning: #{GEM_INSTALL_DIR} already exists."
-  puts "Do you want to delete #{GEM_INSTALL_DIR}? (y/n)"
-  answer = STDIN.gets.chomp
+  puts %Q{
+Found an existing Calabash gem installation here:
+
+#{GEM_INSTALL_DIR}
+
+If you are trying to update your Calabash iOS or Android version
+you should let this script delete this directory.
+
+Deleting this directory will force a clean install of the most recent
+versions of the Calabash gems.
+
+}
+
+  answer = yes_or_no("Do you want to delete the existing installation?", "n")
+
   if answer == 'y'
-    puts "OK, I'll delete #{GEM_INSTALL_DIR} and proceed with install..."
+    puts "Deleting previous installation and proceeding with a clean install."
     FileUtils.rm_rf(GEM_INSTALL_DIR)
   else
-    puts "OK, I'll not touch #{GEM_INSTALL_DIR}...Exiting."
-    exit(2)
+    puts "Alright, the previous installation will not be deleted.  Exiting."
+    exit(EXIT_CODES[:previous_installation_detected])
   end
 end
 
