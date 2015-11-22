@@ -209,21 +209,33 @@ versions of the Calabash gems.
   end
 end
 
-target_gems = %w(calabash-android calabash-cucumber xamarin-test-cloud).join " "
-install_opts = "--no-document --no-prerelease"
-env = "GEM_HOME=\"#{GEM_INSTALL_DIR}\" GEM_PATH=\"#{GEM_INSTALL_DIR}\""
-install_cmd = "#{env} gem install #{target_gems} #{install_opts}"
-
 puts "Creating #{GEM_INSTALL_DIR}."
 FileUtils.mkdir_p(GEM_INSTALL_DIR)
 
+TARGET_GEMS = ["calabash-android", "calabash-cucumber", "xamarin-test-cloud"].join(" ")
+INSTALL_OPTIONS = ["--no-document", "--no-prerelease"].join(" ")
+
 puts "Installing Calabash... This will take a few minutes"
-puts "Running:\n #{install_cmd}"
+
+puts %Q{Running:
+
+GEM_HOME="#{GEM_INSTALL_DIR}" \\
+  GEM_PATH="#{GEM_INSTALL_DIR}" \\
+  #{INSTALL_OPTIONS} \\
+  #{TARGET_GEMS}
+
+}
+
+gem_home_var = "GEM_HOME=\"#{GEM_INSTALL_DIR}\""
+gem_path_var = "GEM_PATH=\"#{GEM_INSTALL_DIR}\""
+
+ENV_VARS = "#{gem_home_var} #{gem_path_var}"
+
+install_cmd = "#{ENV_VARS} gem install #{TARGET_GEMS} #{INSTALL_OPTIONS}"
 
 pid = fork { exec(install_cmd) }
 puts "Please wait..."
 _, status = Process.waitpid2(pid)
-
 
 unless status.success?
   puts "Error while running command: #{install_cmd}."
