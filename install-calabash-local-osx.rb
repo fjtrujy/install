@@ -49,9 +49,13 @@ def rvm_installed?
   managed_ruby_installed?("rvm")
 end
 
+def skip_managed_ruby_check?
+  ARGV.include?("skip-managed-ruby-check")
+end
+
 rbenv = rbenv_installed?
 
-if rbenv
+if rbenv && !skip_managed_ruby_check?
   case rbenv
   when :available
     message = "Detected that rbenv is installed."
@@ -70,7 +74,7 @@ https://github.com/sstephenson/rbenv
   exit(EXIT_CODES[:rbenv_installed])
 end
 
-rvm = rvm_installed?
+rvm = rvm_installed? && !skip_managed_ruby_check?
 
 if rvm
   case rvm
@@ -131,39 +135,39 @@ end
 
 FileUtils.mkdir_p(DOT_CALABASH_DIR)
 
-gem_dir = File.join(DOT_CALABASH_DIR, "gems")
-
-if ARGV[0] == "skip-install"
+if ARGV.include?("skip-install")
   puts %Q{
-Finished preparing
+Finished preparing:
 
-  #{DOT_CALABASH_DIR}
+#{DOT_CALABASH_DIR}
 
 Skipping installation.
 }
   exit(0)
 end
 
-if File.directory?(gem_dir)
-  puts "Warning: #{gem_dir} already exists."
-  puts "Do you want to delete #{gem_dir}? (y/n)"
+GEM_INSTALL_DIR = File.join(DOT_CALABASH_DIR, "calabash-gems")
+
+if File.directory?(GEM_INSTALL_DIR)
+  puts "Warning: #{GEM_INSTALL_DIR} already exists."
+  puts "Do you want to delete #{GEM_INSTALL_DIR}? (y/n)"
   answer = STDIN.gets.chomp
   if answer == 'y'
-    puts "OK, I'll delete #{gem_dir} and proceed with install..."
-    FileUtils.rm_rf gem_dir
+    puts "OK, I'll delete #{GEM_INSTALL_DIR} and proceed with install..."
+    FileUtils.rm_rf(GEM_INSTALL_DIR)
   else
-    puts "OK, I'll not touch #{gem_dir}...Exiting."
+    puts "OK, I'll not touch #{GEM_INSTALL_DIR}...Exiting."
     exit(2)
   end
 end
 
 target_gems = %w(calabash-android calabash-cucumber xamarin-test-cloud).join " "
 install_opts = "--no-document --no-prerelease"
-env = "GEM_HOME=\"#{gem_dir}\" GEM_PATH=\"#{gem_dir}\""
+env = "GEM_HOME=\"#{GEM_INSTALL_DIR}\" GEM_PATH=\"#{GEM_INSTALL_DIR}\""
 install_cmd = "#{env} gem install #{target_gems} #{install_opts}"
 
-puts "Creating #{gem_dir}."
-FileUtils.mkdir gem_dir
+puts "Creating #{GEM_INSTALL_DIR}."
+FileUtils.mkdir_p(GEM_INSTALL_DIR)
 
 puts "Installing Calabash... This will take a few minutes"
 puts "Running:\n #{install_cmd}"
@@ -179,7 +183,7 @@ unless status.success?
 end
 
 puts "Done Installing!"
-puts "\nYou can always uninstall by deleting #{gem_dir}"
+puts "\nYou can always uninstall by deleting #{GEM_INSTALL_DIR}"
 
 
 puts "\n\e[#{35}m### Installation done. Please configure environment ###\e[0m"
@@ -189,9 +193,9 @@ puts <<EOF
 
 Run these commands to setup your environment in this shell:
 
-export GEM_HOME="${HOME}/.calabash/gems"
-export GEM_PATH="${HOME}/.calabash/gems"
-export PATH="${HOME}/.calabash/gems/bin:${PATH}"
+export GEM_HOME="${HOME}/.calabash/calabash-gems"
+export GEM_PATH="${HOME}/.calabash/calabash-gems"
+export PATH="${HOME}/.calabash/calabash-gems/bin:${PATH}"
 
 Or add to them to your ~/.bash_profile or ~/.zshrc and restart the shell."
 

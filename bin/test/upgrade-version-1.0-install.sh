@@ -32,10 +32,9 @@ mkdir -p "${DOT_DIR}/gems"
 mkdir -p "${DOT_DIR}/specifications"
 
 # Need /usr/bin/ruby
-PATH="/usr/bin" \
-  HOME="${TMP_DIR}" \
+HOME="${TMP_DIR}" \
   GEM_HOME="" GEM_PATH="" \
-  ./install-calabash-local-osx.rb skip-install
+  ./install-calabash-local-osx.rb skip-install skip-managed-ruby-check
 
 STATUS=$?
 
