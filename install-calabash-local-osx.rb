@@ -209,37 +209,39 @@ versions of the Calabash gems.
   end
 end
 
-puts "Creating #{GEM_INSTALL_DIR}."
 FileUtils.mkdir_p(GEM_INSTALL_DIR)
 
-TARGET_GEMS = ["calabash-android", "calabash-cucumber", "xamarin-test-cloud"].join(" ")
-INSTALL_OPTIONS = ["--no-document", "--no-prerelease"].join(" ")
+CALABASH_GEMS = ["calabash-android", "calabash-cucumber", "xamarin-test-cloud"]
+INSTALL_OPTIONS = ["--no-document", "--no-prerelease"]
 
-puts "Installing Calabash... This will take a few minutes"
+puts %Q{
 
-puts %Q{Running:
+Installing Calabash with:
 
 GEM_HOME="#{GEM_INSTALL_DIR}" \\
-  GEM_PATH="#{GEM_INSTALL_DIR}" \\
-  #{INSTALL_OPTIONS} \\
-  #{TARGET_GEMS}
+GEM_PATH="#{GEM_INSTALL_DIR}" \\
+#{INSTALL_OPTIONS.join(" ")} \\
+#{CALABASH_GEMS.join(" ")}
 
 }
 
-gem_home_var = "GEM_HOME=\"#{GEM_INSTALL_DIR}\""
-gem_path_var = "GEM_PATH=\"#{GEM_INSTALL_DIR}\""
+ENV_VARS = {
+  "GEM_HOME" => GEM_INSTALL_DIR,
+  "GEM_PATH" => GEM_INSTALL_DIR
+}
 
-ENV_VARS = "#{gem_home_var} #{gem_path_var}"
+puts %Q{
+Please be patient, installation will take a few minutes...
 
-install_cmd = "#{ENV_VARS} gem install #{TARGET_GEMS} #{INSTALL_OPTIONS}"
+}
 
-pid = fork { exec(install_cmd) }
-puts "Please wait..."
-_, status = Process.waitpid2(pid)
+args = ["install"] + INSTALL_OPTIONS + CALABASH_GEMS
+system(ENV_VARS, "gem", *args)
+status = $?
 
 unless status.success?
   puts "Error while running command: #{install_cmd}."
-  exit(1)
+  exit(status.exitstatus)
 end
 
 puts "Done Installing!"
