@@ -1,0 +1,12 @@
+language: objective-c
+
+script:
+  - bin/test/run.sh
+
+notifications:
+  email:
+    recipients:
+      - joshuajmoody@gmail.com
+      - chris.fuentes@xamarin.com
+    on_success: change
+    on_failure: always
