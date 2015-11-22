@@ -210,6 +210,7 @@ versions of the Calabash gems.
 end
 
 FileUtils.mkdir_p(GEM_INSTALL_DIR)
+FileUtils.rm_rf(File.join(DOT_CALABASH_DIR, ".gem"))
 
 CALABASH_GEMS = ["calabash-android", "calabash-cucumber", "xamarin-test-cloud"]
 INSTALL_OPTIONS = ["--no-document", "--no-prerelease"]
