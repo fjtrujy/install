@@ -9,3 +9,6 @@ __MACOSX
 .ruby-version
 .pry-history
 
+# Sometimes the server is cloned during testing.
+calabash-ios-server
+
