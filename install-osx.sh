@@ -23,5 +23,5 @@ GEM_HOME="$CALABASH_GEM_HOME" $GEM install calabash-android -v 0.5.14 --no-ri --
 GEM_HOME="$CALABASH_GEM_HOME" $GEM install xamarin-test-cloud -v 1.1.2 --no-ri --no-rdoc #reduce download time
 
 echo "Done!"
-echo -e "Execute '\033[0;33msource calabash-sandbox start\033[00m' to get started!"
+echo -e "Execute '\033[0;32msource calabash-sandbox start\033[00m' to get started!"
 echo

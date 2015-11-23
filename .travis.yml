@@ -2,6 +2,7 @@ language: objective-c
 
 script:
   - bin/test/run.sh
+  - bin/test/sandbox-test.sh
 
 notifications:
   email:
