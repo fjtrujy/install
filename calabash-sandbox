@@ -1,78 +1,35 @@
 # !/bin/bash
-CACHED_PATH="$HOME/.calabash/.PATH"
-CACHED_GEM_HOME="$HOME/.calabash/.GEM_HOME"
-CACHED_GEM_PATH="$HOME/.calabash/.GEM_PATH_DIR"
-CACHED_PROMPT="$HOME/.calabash/.PS1"
 
 CALABASH_RUBY_VERSION="2.0.0-p195"
 CALABASH_RUBY_PATH="$HOME/.calabash/sandbox/Rubies/$CALABASH_RUBY_VERSION/bin"
 CALABASH_GEM_HOME="$HOME/.calabash/sandbox/Gems"
-CALABASH_SANDBOX_MUTEX="$HOME/.calabash/sandbox/.sandbox.lock"
 
 export GEM_HOME=$CALABASH_GEM_HOME
 export GEM_PATH=$CALABASH_GEM_HOME
 
-if [ "$1" == "start" ]; then
-  if [ -d "$CALABASH_SANDBOX_MUTEX" ]; then
-    echo "Sandbox is already active. Please run"
-    echo -e "\033[0;33msource calabash-sandbox stop\033[00m"
-    echo "and try again"
-    return
+PATH=$CALABASH_RUBY_PATH:$GEM_HOME/bin:$PATH
+
+for dir in `echo $PATH | sed "s/:/ /g"`
+do
+  rbenv=`echo "${dir}" | grep .rbenv`
+  if [ -n "${rbenv}" ]; then
+      #echo "INFO: found '.rbenv' in path: ${dir} - skipping"
+      continue
   fi
 
-  #create mutex
-  mkdir "$CALABASH_SANDBOX_MUTEX"
-
-  #cache env vars for later
-  echo "$PATH" > "$CACHED_PATH"
-  echo "$GEM_HOME" > "$CACHED_GEM_HOME"
-  echo "$GEM_PATH" > "$CACHED_GEM_PATH"
-  echo "$PS1" > "$CACHED_PROMPT"
-
-  PATH=$CALABASH_RUBY_PATH:$GEM_HOME/bin:$PATH
-
-  for dir in `echo $PATH | sed "s/:/ /g"`
-  do
-    rbenv=`echo "${dir}" | grep .rbenv`
-    if [ -n "${rbenv}" ]; then
-        #echo "INFO: found '.rbenv' in path: ${dir} - skipping"
-        continue
-    fi
-
-    rvm=`echo "${dir}" | grep .rvm`
-    if [ -n "${rvm}" ]; then
-        #echo "INFO: found '.rvm' in path: ${dir} - skipping"
-        continue
-    fi
-
-    COMPOSED_PATH="${COMPOSED_PATH}:${dir}"
-  done
-
-  export PATH="${COMPOSED_PATH}"
-  unset COMPOSED_PATH
-  export PS1="\033[0;32m[calabash-sandbox]\033[00m \u\$ "
-  clear
-  echo -e "\033[0;32mThis terminal is now ready to use with Calabash.\033[00m"
-  echo -e "\033[0;32mTo exit, run 'source calabash-sandbox stop'.\033[00m"
-  echo
-elif [ "$1" == "stop" ]; then
-  if [ ! -d "$CALABASH_SANDBOX_MUTEX" ]; then
-    echo "Sandbox is not active"
-    return
+  rvm=`echo "${dir}" | grep .rvm`
+  if [ -n "${rvm}" ]; then
+      #echo "INFO: found '.rvm' in path: ${dir} - skipping"
+      continue
   fi
 
-  rmdir "$CALABASH_SANDBOX_MUTEX"
-  export PATH=$(cat $CACHED_PATH)
-  export GEM_HOME=$(cat $CACHED_GEM_HOME)
-  export GEM_PATH=$(cat $CACHED_GEM_PATH)
-  export PS1=$(cat $CACHED_PROMPT)
-  echo "" > "$CACHED_PATH"
-  echo "" > "$CACHED_GEM_HOME"
-  echo "" > "$CACHED_GEM_PATH"
-  echo "" > "$CACHED_PROMPT"
+  COMPOSED_PATH="${COMPOSED_PATH}:${dir}"
+done
 
-  clear
-  echo -e "\033[0;32mThis terminal is back to its previous state.\033[00m"
-else
-  echo "Usage: source $0 { start | stop }"
-fi
+export PATH="${COMPOSED_PATH}"
+unset COMPOSED_PATH
+export PS1="\033[0;32m[calabash-sandbox]\033[00m \u\$ "
+echo -e "\033[0;32mThis terminal is now ready to use with Calabash.\033[00m"
+echo -e "\033[0;34mTo exit, type 'exit'.\033[00m"
+exec bash
+echo

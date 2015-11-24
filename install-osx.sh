@@ -10,6 +10,7 @@ SANDBOX="$HOME/.calabash/sandbox"
 #Don't overwrite the sandbox if it already exists
 if [ -d "$SANDBOX" ]; then
   echo "Sandbox already exists! If you want to overwrite, first delete $SANDBOX"
+  echo "rm -rf $HOME/.calabash/sandbox"
   exit 1
 fi
 
