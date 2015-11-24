@@ -43,5 +43,5 @@ unzip -qo "CalabashGems.zip" -d "$GEM_HOME"
 rm "CalabashGems.zip"
 
 echo "Done!"
-echo -e "Execute '\033[0;32mcalabash-sandbox\033[00m' to get started!"
+echo -e "Execute '\033[0;32m calabash-sandbox \033[00m' to get started! "
 echo
