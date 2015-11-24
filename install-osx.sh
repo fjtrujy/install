@@ -2,11 +2,6 @@
 
 set -e
 
-if [ "${_system_type}" != "Darwin" ]; then
-  echo "install-osx is only compatible with OSX"
-  exit 1
-fi
-
 export GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
 GEM="$HOME/.calabash/sandbox/Rubies/2.0.0-p195/bin/gem"
