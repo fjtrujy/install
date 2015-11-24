@@ -1,17 +1,26 @@
 #!/bin/bash
 
-#we need this for our bundle / gem commands
-export GEM_HOME="$HOME/.calabash/sandbox/Gems"
+set -e
 
-CALABASH_RUBIES_HOME="$HOME/.calabash/sandbox/Rubies"
+if [ "${_system_type}" != "Darwin" ]; then
+  echo "install-osx is only compatible with OSX"
+  exit 1
+fi
+
+GEM_HOME="${HOME}/.calabash/sandbox/Gems"
+CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
 GEM="$HOME/.calabash/sandbox/Rubies/2.0.0-p195/bin/gem"
 SANDBOX="$HOME/.calabash/sandbox"
 
-#Don't overwrite the sandbox if it already exists
+#Don't auto-overwrite the sandbox if it already exists
 if [ -d "$SANDBOX" ]; then
-  echo "Sandbox already exists! If you want to overwrite, first delete $SANDBOX"
-  echo "rm -rf $HOME/.calabash/sandbox"
-  exit 1
+  echo "Sandbox already exists! Do you want to overwrite? (y/n)"
+  read -n 1 -s ANSWER
+  if [ $ANSWER == "y" ]; then
+    rm -rf "${HOME}/.calabash/sandbox"
+  else
+    exit 0
+  fi
 fi
 
 mkdir -p "$GEM_HOME"
@@ -19,25 +28,20 @@ mkdir -p "$HOME/.calabash/sandbox/Rubies"
 
 #Download Ruby
 echo "Preparing Ruby..."
-curl -L -O --fail https://s3-eu-west-1.amazonaws.com/calabash-files/2.0.0-p195.zip 2>/dev/null
-unzip -qo "2.0.0-p195.zip" -d "$CALABASH_RUBIES_HOME"
+curl -o "2.0.0-p195.zip" --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/2.0.0-p195.zip
+unzip -qo "2.0.0-p195.zip" -d "${CALABASH_RUBIES_HOME}"
 rm "2.0.0-p195.zip"
 
 #Download the Sandbox Script
 echo "Preparing sandbox..."
-curl -L -O --fail https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox 2>/dev/null
-chmod a+x calabash-sandbox
-mv calabash-sandbox /usr/local/bin
-
-#Download the basic Gemfile with calabash-cucumber, calabash-android, and xamarin-test-cloud
-curl -L -O --fail https://s3-eu-west-1.amazonaws.com/calabash-files/Gemfile.Basic 2>/dev/null
-mv Gemfile.Basic "$SANDBOX/Gemfile"
+(cd /usr/local/bin && curl -L -O --fail https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox 2>/dev/null && chmod a+x calabash-sandbox)
 
 #Download the gems and their dependencies
-echo "Installing gems..."
-$GEM install bundler --no-ri --no-rdoc
-(cd "$HOME/.calabash/sandbox"; bundle install)
+echo "Installing gems, this may take a little while..."
+curl -O --progress-bar "https://s3-eu-west-1.amazonaws.com/calabash-files/CalabashGems.zip"
+unzip -qo "CalabashGems.zip" -d "$GEM_HOME"
+rm "CalabashGems.zip"
 
 echo "Done!"
-echo -e "Execute '\033[0;32msource calabash-sandbox start\033[00m' to get started!"
+echo -e "Execute '\033[0;32mcalabash-sandbox\033[00m' to get started!"
 echo

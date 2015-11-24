@@ -1,13 +1,16 @@
 
 ./install-osx.sh
-source calabash-sandbox start
 
-if [ "$GEM_HOME" != "$HOME/.calabash/sandbox/Gems" ]; then
-  exit 1
-fi
+set -e
 
-source calabash-sandbox stop
+calabash-sandbox
 
-if [ "$GEM_HOME" == "$HOME/.calabash/sandbox/Gems" ]; then
-  exit 1
-fi
+#TODO: Test these somehow...
+# if [ "$GEM_HOME" != "$HOME/.calabash/sandbox/Gems" ]; then
+#   exit 1
+# fi
+#
+#
+# if [ "$GEM_HOME" == "$HOME/.calabash/sandbox/Gems" ]; then
+#   exit 1
+# fi
