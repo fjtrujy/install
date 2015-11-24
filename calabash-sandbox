@@ -53,6 +53,7 @@ if [ "$1" == "start" ]; then
   export PS1="\033[0;32m[calabash-sandbox]\033[00m \u\$ "
   clear
   echo -e "\033[0;32mThis terminal is now ready to use with Calabash.\033[00m"
+  echo -e "\033[0;32mTo exit, run 'source calabash-sandbox stop'.\033[00m"
   echo
 elif [ "$1" == "stop" ]; then
   if [ ! -d "$CALABASH_SANDBOX_MUTEX" ]; then
