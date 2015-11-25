@@ -1,10 +1,15 @@
 #!/bin/bash
 
+if [ "$(uname -s)" != "Darwin" ]; then
+  echo "Calabash-sandbox only runs on Mac OSX"
+  exit 1
+fi
+
 set -e
 
 export GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
-CALABASH_RUBY_VERSION="2.0.0-p195"
+CALABASH_RUBY_VERSION="2.1.5-p273"
 GEM="$HOME/.calabash/sandbox/Rubies/$CALABASH_RUBY_VERSION/bin/gem"
 SANDBOX="$HOME/.calabash/sandbox"
 
@@ -24,9 +29,9 @@ mkdir -p "$HOME/.calabash/sandbox/Rubies"
 
 #Download Ruby
 echo "Preparing Ruby..."
-curl -o "2.0.0-p195.zip" --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/2.0.0-p195.zip
-unzip -qo "2.0.0-p195.zip" -d "${CALABASH_RUBIES_HOME}"
-rm "2.0.0-p195.zip"
+curl -o "${CALABASH_RUBY_VERSION}.zip" --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/2.1.5-p273.zip
+unzip -qo "${CALABASH_RUBY_VERSION}.zip" -d "${CALABASH_RUBIES_HOME}"
+rm "${CALABASH_RUBY_VERSION}.zip"
 
 #Download the Sandbox Script
 echo "Preparing sandbox..."
