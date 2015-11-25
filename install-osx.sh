@@ -4,7 +4,8 @@ set -e
 
 export GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
-GEM="$HOME/.calabash/sandbox/Rubies/2.0.0-p195/bin/gem"
+CALABASH_RUBY_VERSION="2.0.0-p195"
+GEM="$HOME/.calabash/sandbox/Rubies/$CALABASH_RUBY_VERSION/bin/gem"
 SANDBOX="$HOME/.calabash/sandbox"
 
 #Don't auto-overwrite the sandbox if it already exists
@@ -42,6 +43,7 @@ echo "gem 'calabash-android', '>= 0.5.15', '< 1.0'" >> "${SANDBOX}/Gemfile"
 echo "gem 'xamarin-test-cloud', '~> 1.0'" >> "${SANDBOX}/Gemfile"
 
 #TODO Do we need to clear defaults for bundler...?
+export PATH="${HOME}/.calabash/sandbox/Rubies/$CALABASH_RUBY_VERSION/bin":$PATH
 cd "${SANDBOX}" && ${GEM_HOME}/bin/bundle install --path=${GEM_HOME} --binstubs=${GEM_HOME}/bin
 
 echo "Done!"
