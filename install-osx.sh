@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$(uname -s)" != "Darwin" ]; then
   echo "Calabash-sandbox only runs on Mac OSX"
@@ -22,6 +22,12 @@ if [ -d "$SANDBOX" ]; then
   else
     exit 0
   fi
+fi
+
+if [ ! -w "/usr/local/bin" ]; then
+  echo "/usr/local/bin is not writeable'"
+  echo -e "Please execute '\033[0;33msudo chmod +w /usr/local/bin\033[00m' and try again"
+  exit 2
 fi
 
 mkdir -p "$GEM_HOME"
