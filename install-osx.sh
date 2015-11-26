@@ -5,19 +5,11 @@ if [ "$(uname -s)" != "Darwin" ]; then
   exit 1
 fi
 
-# set -e
-
 export GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
 CALABASH_RUBY_VERSION="2.1.5-p273"
 SANDBOX="$HOME/.calabash/sandbox"
-
-if [ ! -w "/usr/local/bin" ]; then
-  echo "/usr/local/bin is not writeable'"
-  echo -e "Please execute '\033[0;33msudo chmod a+w /usr/local/bin\033[00m' and try again"
-  echo "If you are not an admin user, contact a system administrator"
-  exit 2
-fi
+CALABASH_SANDBOX="calabash-sandbox"
 
 #Don't auto-overwrite the sandbox if it already exists
 if [ -d "$SANDBOX" ]; then
@@ -37,10 +29,6 @@ curl -o "${CALABASH_RUBY_VERSION}.zip" --progress-bar https://s3-eu-west-1.amazo
 unzip -qo "${CALABASH_RUBY_VERSION}.zip" -d "${CALABASH_RUBIES_HOME}"
 rm "${CALABASH_RUBY_VERSION}.zip"
 
-#Download the Sandbox Script
-echo "Preparing sandbox..."
-(cd /usr/local/bin && curl -L -O --fail https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox 2>/dev/null && chmod a+x calabash-sandbox)
-
 # #Download the gems and their dependencies
 echo "Installing gems, this may take a little while..."
 curl -o "CalabashGems.zip" --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/CalabashGems.zip
@@ -53,13 +41,25 @@ echo "gem 'calabash-cucumber', '>= 0.16.4', '< 1.0'" >> "${SANDBOX}/Gemfile"
 echo "gem 'calabash-android', '>= 0.5.15', '< 1.0'" >> "${SANDBOX}/Gemfile"
 echo "gem 'xamarin-test-cloud', '~> 1.0'" >> "${SANDBOX}/Gemfile"
 
-DROID=$( { echo "calabash-android version >&2" |  calabash-sandbox 1>/dev/null; } 2>&1)
-IOS=$( { echo "calabash-ios version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
-TESTCLOUD=$( { echo "test-cloud version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
+#Download the Sandbox Script
+echo "Preparing sandbox..."
+curl -L -O --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox
+chmod a+x $CALABASH_SANDBOX
+mv $CALABASH_SANDBOX /usr/local/bin
+if [ $? -ne 0 ]; then
+  CALABASH_SANDBOX="./calabash-sandbox"
+  echo -e "\033[0;33m[Warning]:\033[00m Unable to install globally, /usr/local/bin is not writeable"
+  echo "To install globally, use 'sudo' and move calabash-sandbox to a location on your path."
+  echo -e "E.g., '\033[0;33msudo mv calabash-sandbox /usr/local/bin\033[00m'"
+fi
+
+DROID=$( { echo "calabash-android version 1>&2" |  $CALABASH_SANDBOX 1>/dev/null; } 2>&1)
+IOS=$( { echo "calabash-ios version 1>&2" | $CALABASH_SANDBOX 1>/dev/null; } 2>&1)
+TESTCLOUD=$( { echo "test-cloud version 1>&2" | $CALABASH_SANDBOX 1>/dev/null; } 2>&1)
 
 echo "Done! Installed:"
 echo -e "\033[0;33mcalabash-ios:       $IOS"
 echo "calabash-android:   $DROID"
 echo -e "xamarin-test-cloud: $TESTCLOUD\033[00m"
-echo -e "Execute '\033[0;32mcalabash-sandbox\033[00m' to get started! "
+echo -e "Execute '\033[0;32m$CALABASH_SANDBOX\033[00m' to get started! "
 echo
