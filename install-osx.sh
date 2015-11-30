@@ -49,8 +49,9 @@ mv $CALABASH_SANDBOX /usr/local/bin
 if [ $? -ne 0 ]; then
   CALABASH_SANDBOX="./calabash-sandbox"
   echo -e "\033[0;33m[Warning]:\033[00m Unable to install globally, /usr/local/bin is not writeable"
-  echo "To install globally, use 'sudo' and move calabash-sandbox to a location on your path."
-  echo -e "E.g., '\033[0;33msudo mv calabash-sandbox /usr/local/bin\033[00m'"
+  echo "To install globally, run this command:"
+  echo ""
+  echo -e "'\033[0;33msudo mv calabash-sandbox /usr/local/bin\033[00m'"
 fi
 
 DROID=$( { echo "calabash-android version 1>&2" |  $CALABASH_SANDBOX 1>/dev/null; } 2>&1)
