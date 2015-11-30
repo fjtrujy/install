@@ -58,7 +58,7 @@ If you have altered your sandbox environment in a way you don't like and want
 to restore it to the original state, just run these commands:
 
 ```shell
-rm -rf $HOME/.calabash/sandbox
+rm -r ${HOME}/.calabash/sandbox
 curl -sSL https://raw.githubusercontent.com/calabash/install/feature/sandbox/install-osx.sh | bash
 ```
 
@@ -107,6 +107,6 @@ If you'd like to install it globally, either have an administrator move the
 ## I installed it as `sudo` and now can't restore it
 Execute
 ```shell
-sudo rm -rf ~/.calabash/sandbox
+sudo rm -r ${HOME}/.calabash/sandbox
 ```
 and then try installing again (preferably _without sudo_).
