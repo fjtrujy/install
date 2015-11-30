@@ -15,7 +15,7 @@ CALABASH_SANDBOX="calabash-sandbox"
 if [ -d "$SANDBOX" ]; then
   echo "Sandbox already exists! Do you want to overwrite? (y/n)"
   read -n 1 -s ANSWER
-  if [ $ANSWER != "y" ]; then
+  if [ "$ANSWER" != "y" ]; then
     exit 0
   fi
 fi
