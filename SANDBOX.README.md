@@ -69,7 +69,7 @@ This will restore it to a fresh installation.
 If you would prefer to set up your own environment and feel comfortable managing
 your own version(s) of Ruby, we'd recommend using a ruby manager such as [rvm](https://rvm.io/)
 or [rbenv](https://github.com/rbenv/rbenv) as well as [bundler](http://bundler.io/). We'd also recommend that you use the same
-version of ruby running in Test Cloud (2.1.5-p273 at the time of writing).
+version of ruby running in Test Cloud (2.1.5-p273).
 
 A basic Gemfile might look like this:
 ```ruby
