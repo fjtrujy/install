@@ -8,20 +8,20 @@ fi
 export GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
 CALABASH_RUBY_VERSION="2.1.5-p273"
-SANDBOX="$HOME/.calabash/sandbox"
+SANDBOX="${HOME}/.calabash/sandbox"
 CALABASH_SANDBOX="calabash-sandbox"
 
 #Don't auto-overwrite the sandbox if it already exists
-if [ -d "$SANDBOX" ]; then
+if [ -d "${SANDBOX}" ]; then
   echo "Sandbox already exists! Do you want to overwrite? (y/n)"
   read -n 1 -s ANSWER
-  if [ "$ANSWER" != "y" ]; then
+  if [ "${ANSWER}" != "y" ]; then
     exit 0
   fi
 fi
 
 mkdir -p "$GEM_HOME"
-mkdir -p "$HOME/.calabash/sandbox/Rubies"
+mkdir -p "${HOME}/.calabash/sandbox/Rubies"
 
 #Download Ruby
 echo "Preparing Ruby ${CALABASH_RUBY_VERSION}..."
