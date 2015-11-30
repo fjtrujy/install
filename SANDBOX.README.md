@@ -36,13 +36,12 @@ run
 ```shell
 calabash-ios gen
 ```
-
 or
 ```shell
 calabash-android gen
 ```
 
-For more information, please see the [calabash documentation](http://developer.xamarin.com/guides/testcloud/calabash/).
+For more information on calabash, please see the [calabash documentation](http://developer.xamarin.com/guides/testcloud/calabash/).
 
 ## Configuring/Customizing the environment
 By default, the sandbox will ignore any existing ruby setup you have on your
@@ -79,3 +78,35 @@ gem 'calabash-cucumber', '>= 0.16.4', '< 1.0'
 gem 'calabash-android', '>= 0.5.15', '< 1.0'
 gem 'xamarin-test-cloud', '~> 1.0'
 ```
+
+# Notes and Troubleshooting
+
+## Supported Platforms
+Calabash Sandbox has been tested on OSX Yosemite and El Capitan. Other platforms
+are not officially supported (e.g. older OSX versions). If you are running on a
+supported platform and experience problems not discussed here, please file an
+issue [here](https://github.com/calabash/install/issues).
+
+## "/usr/local/bin is not writeable"
+This is a common error on a fresh install of OSX.
+
+The script attempts to install the sandbox executable to /usr/local/bin so that
+it can be easily invoked from the command line. However, if you don't have
+write permissions in that dir, the install script will not be able to move
+the script there. You can still run it locally by executing
+```shell
+./calabash-sandbox
+```
+from the same directory as you ran the install script.
+
+If you'd like to install it globally, either have an administrator move the
+`calabash-sandbox` executable to somewhere in your `PATH` or modify your
+`.bash_profile`, `.profile`, `.zsh` etc. to find `calabash-sandbox` in your
+`PATH`. It is not recommended to run the install script under `sudo`.
+
+## I installed it as `sudo` and now can't restore it
+Execute
+```shell
+sudo rm -rf ~/.calabash/sandbox
+```
+and then try installing again (preferably _without sudo_).
