@@ -11,7 +11,7 @@ you don't need to worry about ruby compatibilities.
 To install the sandbox, run:
 
 ```shell
-curl -sSL https://raw.githubusercontent.com/calabash/install/feature/sandbox/install-osx.sh | bash
+curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-osx.sh | bash
 ```
 
 When installation completes, you should see something like the following:
