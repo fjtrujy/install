@@ -12,3 +12,7 @@ __MACOSX
 # Sometimes the server is cloned during testing.
 calabash-ios-server
 
+
+CalabashGems.zip
+
+*.lock
