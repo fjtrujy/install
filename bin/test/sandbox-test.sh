@@ -1,3 +1,14 @@
+#!/usr/bin/env bash
+
+# Executing this test from ./ causes ./calabash-sandbox to be deleted (mv'ed)
+# to /usr/local/bin - assuming it is writable.  Execute the script in tmp
+# directory.
+TMP_DIR=tmp/sandbox
+rm -rf "${TMP_DIR}"
+mkdir -p "${TMP_DIR}"
+cp ./install-osx.sh "${TMP_DIR}"
+
+cd "${TMP_DIR}"
 
 ./install-osx.sh
 
@@ -24,3 +35,4 @@ if [ "${gem_home}" != "${HOME}/.calabash/sandbox/Gems" ]; then
   echo "Gem Home should be ${HOME}/.calabash/sandbox/Gems; Got $gem_home"
   exit 3
 fi
+
