@@ -16,6 +16,8 @@ rm -rf "${TMP_DIR}"
 mkdir -p "${TMP_DIR}"
 cp ./install-osx.sh "${TMP_DIR}"
 
+cp -r bin/test/cucumber "${TMP_DIR}"
+
 cd "${TMP_DIR}"
 
 ./install-osx.sh
@@ -43,4 +45,36 @@ if [ "${gem_home}" != "${HOME}/.calabash/sandbox/Gems" ]; then
   echo "Gem Home should be ${HOME}/.calabash/sandbox/Gems; Got $gem_home"
   exit 3
 fi
+
+if [ ! -z "${TRAVIS}" ]; then
+  echo "Integration tests don't run on Travis."
+  echo "Done!"
+  exit 0
+fi
+
+git clone https://github.com/calabash/calabash-ios-server.git
+
+cd calabash-ios-server
+bundle install
+make app-cal
+
+mv Products/test-target/app-cal/LPTestTarget.app \
+  ../cucumber
+
+cd ../cucumber
+
+mkdir -p results
+
+# Fails silently.
+#
+# [ENV] cucumber [args]
+# echo "$?" > exit.out
+#
+# exit.out is always 0
+#
+# Will have to rely on post-processing of results/cucumber.json
+calabash-sandbox <<EOF
+APP=./LPTestTarget.app cucumber --format pretty --format json -o results/cucumber.json
+exit
+EOF
 
