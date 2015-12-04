@@ -8,17 +8,17 @@ if [ "$(uname -s)" != "Darwin" ]; then
 fi
 
 if [ $# == 1 ]; then
-  echo "Calabash sandbox version: $SCRIPT_VERSION"
+  echo "Calabash sandbox version: ${SCRIPT_VERSION}"
   exit 0
 fi
 
 CALABASH_RUBY_VERSION="2.1.5-p273"
-CALABASH_RUBY_PATH="${HOME}/.calabash/sandbox/Rubies/$CALABASH_RUBY_VERSION/bin"
+CALABASH_RUBY_PATH="${HOME}/.calabash/sandbox/Rubies/${CALABASH_RUBY_VERSION}/bin"
 CALABASH_GEM_HOME="${HOME}/.calabash/sandbox/Gems"
-export GEM_HOME=$CALABASH_GEM_HOME
-export GEM_PATH=$CALABASH_GEM_HOME:$CALABASH_GEM_HOME/ruby/2.0.0:$CALABASH_GEM_HOME/ruby/2.1.0
+export GEM_HOME="${CALABASH_GEM_HOME}"
+export GEM_PATH="${CALABASH_GEM_HOME}:${CALABASH_GEM_HOME}/ruby/2.0.0:${CALABASH_GEM_HOME}/ruby/2.1.0"
 
-PATH=$CALABASH_RUBY_PATH:$GEM_HOME/bin:$PATH
+PATH="${CALABASH_RUBY_PATH}:${GEM_HOME}/bin:${PATH}"
 
 for dir in `echo "${PATH}" | sed "s/:/ /g"`
 do
@@ -43,3 +43,4 @@ export PS1='\[\e[1;32m\][\u@calabash-sandbox]\$\[\e[0m\] ' # '[<user>@calabash-s
 echo -e "\033[0;32mThis terminal is now ready to use with Calabash.\033[00m"
 echo -e "\033[0;34mTo exit, type 'exit'.\033[00m"
 bash && echo -e "\n\033[0;32mThis terminal is back to normal.\033[00m"
+
