@@ -25,13 +25,21 @@ mkdir -p "${HOME}/.calabash/sandbox/Rubies"
 
 #Download Ruby
 echo "Preparing Ruby ${CALABASH_RUBY_VERSION}..."
-curl -o "${CALABASH_RUBY_VERSION}.zip" --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/2.1.5-p273.zip
+
+curl -o \
+  "${CALABASH_RUBY_VERSION}.zip" \
+  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/2.1.5-p273.zip
+
 unzip -qo "${CALABASH_RUBY_VERSION}.zip" -d "${CALABASH_RUBIES_HOME}"
 rm "${CALABASH_RUBY_VERSION}.zip"
 
-# #Download the gems and their dependencies
+#Download the gems and their dependencies
 echo "Installing gems, this may take a little while..."
-curl -o "CalabashGems.zip" --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/CalabashGems.zip
+
+curl -o \
+  "CalabashGems.zip" \
+  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/CalabashGems.zip
+
 unzip -qo "CalabashGems.zip" -d "${SANDBOX}"
 rm "CalabashGems.zip"
 
@@ -43,7 +51,10 @@ echo "gem 'xamarin-test-cloud', '~> 1.0'" >> "${SANDBOX}/Gemfile"
 
 #Download the Sandbox Script
 echo "Preparing sandbox..."
-curl -L -O --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox
+
+curl -L -O \
+  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox
+
 chmod a+x $CALABASH_SANDBOX
 mv $CALABASH_SANDBOX /usr/local/bin
 if [ $? -ne 0 ]; then
@@ -64,3 +75,4 @@ echo "calabash-android:   $DROID"
 echo -e "xamarin-test-cloud: $TESTCLOUD\033[00m"
 echo -e "Execute '\033[0;32m$CALABASH_SANDBOX\033[00m' to get started! "
 echo
+
