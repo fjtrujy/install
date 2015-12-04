@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# In the absence of a --no-input option, we need to clear an existing sandbox
+# before we test on Jenkins, otherwise the test will block waiting for input.
+#
+# On Travis the directory will always be empty.
+if [ ! -z "${JENKINS_HOME}" ]; then
+  rm -rf "${HOME}/.calabash/sandbox"
+fi
+
 # Executing this test from ./ causes ./calabash-sandbox to be deleted (mv'ed)
 # to /usr/local/bin - assuming it is writable.  Execute the script in tmp
 # directory.
