@@ -37,13 +37,12 @@ do
   COMPOSED_PATH="${COMPOSED_PATH}:${dir}"
 done
 
-#need adb for android
-ADB=$(which adb)
+#Need to ensure adb is accessible for android
+$(command -v adb)
 if [ $? -eq 0 ]; then
-  ADB=$(dirname ${ADB})
-  echo "Adding $ADB to path"
+  ADB=$(dirname $(which adb))
+  echo "Adding ${ADB} to path"
   COMPOSED_PATH="${COMPOSED_PATH}:${ADB}"
-  #TODO should an adb be installed with the sandbox?
 fi
 
 export PATH="${COMPOSED_PATH}"
