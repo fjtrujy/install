@@ -8,6 +8,32 @@ function Expand-ZIPFile($file, $destination)
     }
 }
 
+function Rewrite-Path($path, $folders)
+{
+    $pathParts = New-Object System.Collections.Generic.List[string]
+    $pathParts.AddRange($path.Split(";", [System.StringSplitOptions]::RemoveEmptyEntries))
+
+    # Remove any ruby bin folders from the path
+    Foreach ($dir in $pathParts.ToArray())
+    {
+        if (Test-Path "$dir\ruby.exe")
+        {
+            $pathParts.Remove($dir) | Out-Null
+        }
+    }
+
+    # Ensure each folder in $folders is part of the path
+    Foreach ($folder in $folders)
+    {
+        if (!($pathParts.Contains($folder)))
+        {
+            $pathParts.Add($folder)
+        }
+    }
+    
+    return [string]::Join(";", $pathParts)
+}
+
 $ErrorActionPreference = "Stop"
 
 $sandbox="${env:USERPROFILE}\.calabash\sandbox"
@@ -78,40 +104,22 @@ Remove-Item $gemsDownloadFile
 Write-Host "Preparing sandbox..."
 wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/calabash-sandbox.bat -OutFile $calabashSandboxBat
 
-$pathParts = New-Object System.Collections.Generic.List[string]
-$pathParts.AddRange([Environment]::GetEnvironmentVariable("Path", "user").Split(";", [System.StringSplitOptions]::RemoveEmptyEntries))
+$folders = New-Object System.Collections.Generic.List[string]
+$folders.Add($calabashSandboxBin)
+$folders.Add($calabashRubyPath)
+$folders.Add("${env:GEM_HOME}\bin")
 
-# Remove any ruby bin folders from the path
-Foreach ($dir in $pathParts.ToArray())
+$userPath = [Environment]::GetEnvironmentVariable("Path", "user");
+if (!$userPath)
 {
-    if (Test-Path "$dir\ruby.exe")
-    {
-        $pathParts.Remove($dir) | Out-Null
-    }
+    $userPath = ""
 }
 
-# Add the calabash bin folder to the path
-if (!($pathParts.Contains($calabashSandboxBin)))
-{
-    $pathParts.Add($calabashSandboxBin)
-}
+$newUserPath = Rewrite-Path $userPath $folders
+[Environment]::SetEnvironmentVariable("Path", $newUserPath, "user")
 
-# Add the ruby bin folder to the path
-if (!($pathParts.Contains($calabashRubyPath)))
-{
-    $pathParts.Add($calabashRubyPath)
-}
-
-# Add GEM_HOME to the path
-if (!($pathParts.Contains("${env:GEM_HOME}\bin")))
-{
-    $pathParts.Add("${env:GEM_HOME}\bin")
-}
-
-$newPath = [string]::Join(";", $pathParts)
-
-[Environment]::SetEnvironmentVariable("Path", $newPath, "user")
-[Environment]::SetEnvironmentVariable("Path", $newPath, "process")
+$newProcessPath = Rewrite-Path $env:Path $folders
+[Environment]::SetEnvironmentVariable("Path", $newProcessPath, "process")
 
 $droidVersion = (calabash-android version) | Out-String
 $iosVersion = (calabash-ios version) | Out-String
