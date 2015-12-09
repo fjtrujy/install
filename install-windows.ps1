@@ -8,6 +8,8 @@ function Expand-ZIPFile($file, $destination)
     }
 }
 
+$ErrorActionPreference = "Stop"
+
 $sandbox="${env:USERPROFILE}\.calabash\sandbox"
 $calabashRubiesHome="${sandbox}\Rubies"
 $calabashRubyVersion="ruby-2.1.5-p273"
