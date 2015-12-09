@@ -62,14 +62,14 @@ Write-Host "Preparing Ruby ${calabashRubyVersion}..."
 $currentDirectory = (Resolve-Path .\).Path
 $rubyDownloadFile = "$currentDirectory\${calabashRubyVersion}-win32.zip"
 # TODO: put the ruby zip somewhere and download it
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/2.1.5-p273-win32.zip -OutFile $rubyDownloadFile
+wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/2.1.5-p273-win32.zip -OutFile $rubyDownloadFile
 Expand-ZIPFile $rubyDownloadFile $calabashRubiesHome
 Remove-Item $rubyDownloadFile
 
 #Download the gems and their dependencies
 Write-Host "Installing gems, this may take a little while..."
 $gemsDownloadFile = "$currentDirectory\CalabashGems-win32.zip"
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/CalabashGems-win32.zip -OutFile $gemsDownloadFile
+wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/CalabashGems-win32.zip -OutFile $gemsDownloadFile
 Expand-ZIPFile $gemsDownloadFile $sandbox
 Remove-Item $gemsDownloadFile
 
