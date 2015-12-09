@@ -114,9 +114,6 @@ $newPath = [string]::Join(";", $pathParts)
 [Environment]::SetEnvironmentVariable("Path", "${newPath}", "user")
 [Environment]::SetEnvironmentVariable("Path", "${newPath}", "process")
 
-Set-Location $sandbox
-iex "bundle install"
-
 $droidVersion = (calabash-android version) | Out-String
 $iosVersion = (calabash-ios version) | Out-String
 $testCloudVersion = (test-cloud version) | Out-String
