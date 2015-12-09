@@ -4,10 +4,7 @@ Two scripts for installing the Calabash gems on your computer.
 
 ## Installing on OS X
 
-To simplify the installation of the Calabash gems and to minimize compatibility issues with the system Ruby that is provided by OS X Mavericks and above, we provide a tool called the _Calabash Sandbox_ .  You can read all about it in the [SANDBOX.README.md](SANDBOX.README.md).
-
-
-**Note:** You are strongly discouraged from [installing gems with `sudo`](https://github.com/calabash/calabash-ios/wiki/Best-Practice%3A--Never-install-gems-with-sudo).
+To simplify the installation of Calabash on OS X and to minimize any compatibility issues with the older Ruby 2.0 provided by OS X, we created a tool called the _Calabash Sandbox_. This tool establishes a sandbox environment within a Terminal session with the necessary Calabash gems and Ruby 2.1.5-p273. You can read all about the Calabash Sandbox in the [SANDBOX.README.md](SANDBOX.README.md).
 
 ```shell
 $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-osx.sh | bash
@@ -23,7 +20,7 @@ xamarin-test-cloud: 1.1.2
 Execute 'calabash-sandbox' to get started!
 ```
 
-To start Calabash Sandbox, execute `calabash-sandbox` in a Terminal window. To leave the Sandbox and return the terminal to its previous state, type `exit`:
+To start Calabash Sandbox, execute `calabash-sandbox` in a Terminal window. To leave the Sandbox and return the Terminal to its previous state, type `exit`:
 
 ```shell
 $ calabash-sandbox
@@ -37,7 +34,6 @@ $ exit
 This terminal is back to normal.
 $
 ```
-
 
 ## Installing on Windows
 
