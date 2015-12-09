@@ -4,26 +4,36 @@ Two scripts for installing the Calabash gems on your computer.
 
 ## Installing on OS X
 
-On OS X Maverics and above, Ruby is already installed in version 2.0 or above.
-On these systems installing Calabash without having to call sudo can be done
-by running this command:
+To simplify the installation of Calabash on OS X and to minimize any compatibility issues with the older Ruby 2.0 provided by OS X, we created a tool called the _Calabash Sandbox_. This tool establishes a sandbox environment within a Terminal session with the necessary Calabash gems and Ruby 2.1.5-p273. You can read all about the Calabash Sandbox in the [SANDBOX.README.md](SANDBOX.README.md).
 
-```
-ruby <(curl -fsSL https://raw.githubusercontent.com/calabash/install/master/install-calabash-local-osx.rb)
+```shell
+$ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-osx.sh | bash
 ```
 
-### Configuration
+When installation completes, you should see something like the following:
 
-After installing you should add the following lines to your login
-profile (usually `~/.bash_profile` or `~/.zshrc`).
-
+```shell
+Done! Installed:
+calabash-ios:       0.16.4
+calabash-android:   0.5.15
+xamarin-test-cloud: 1.1.2
+Execute 'calabash-sandbox' to get started!
 ```
-export GEM_HOME=~/.calabash/calabash-gems
-export GEM_PATH=~/.calabash/calabash-gems
-export PATH="${HOME}/.calabash/calabash-gems/bin:${PATH}"
-```
 
-Then restart your Terminal or open a new shell.
+To start Calabash Sandbox, execute `calabash-sandbox` in a Terminal window. To leave the Sandbox and return the Terminal to its previous state, type `exit`:
+
+```shell
+$ calabash-sandbox
+This terminal is now ready to use with Calabash.
+To exit, type 'exit'.
+
+$ calabash-ios version
+$ calabash-android version
+$ exit
+
+This terminal is back to normal.
+$
+```
 
 ## Installing on Windows
 
@@ -46,4 +56,3 @@ You can download the sample Gemfile with this command:
 ```
 curl -fsSL https://raw.githubusercontent.com/calabash/install/master/Gemfile -o Gemfile
 ```
-
