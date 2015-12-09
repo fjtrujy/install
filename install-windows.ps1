@@ -86,7 +86,7 @@ Foreach ($dir in $pathParts.ToArray())
 {
     if (Test-Path "$dir\ruby.exe")
     {
-        $pathParts.Remove($dir)
+        $pathParts.Remove($dir) | Out-Null
     }
 }
 
