@@ -36,9 +36,15 @@ rm "${CALABASH_RUBY_VERSION}.zip"
 #Download the gems and their dependencies
 echo "Installing gems, this may take a little while..."
 
+CALABASH_GEMS_FILE="CalabashGems.zip"
+if [ "${DEBUG}" == 1 ]; then
+  CALABASH_GEMS_FILE="calabash-sandbox/dev/CalabashGems.zip"
+  echo "[DEBUG]: Using calabash gems file: ${CALABASH_GEMS_FILE}"
+fi
+
 curl -o \
   "CalabashGems.zip" \
-  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/CalabashGems.zip
+  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/${CALABASH_GEMS_FILE}
 
 unzip -qo "CalabashGems.zip" -d "${SANDBOX}"
 rm "CalabashGems.zip"
@@ -75,4 +81,3 @@ echo "calabash-android:   $DROID"
 echo -e "xamarin-test-cloud: $TESTCLOUD\033[00m"
 echo -e "Execute '\033[0;32m$CALABASH_SANDBOX\033[00m' to get started! "
 echo
-
