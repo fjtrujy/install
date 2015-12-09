@@ -61,8 +61,7 @@ if (!(Test-Path $calabashSandboxBin))
 Write-Host "Preparing Ruby ${calabashRubyVersion}..."
 $currentDirectory = (Resolve-Path .\).Path
 $rubyDownloadFile = "$currentDirectory\${calabashRubyVersion}-win32.zip"
-# TODO: put the ruby zip somewhere and download it
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/2.1.5-p273-win32.zip -OutFile $rubyDownloadFile
+wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/ruby-2.1.5-p273-win32.zip -OutFile $rubyDownloadFile
 Expand-ZIPFile $rubyDownloadFile $calabashRubiesHome
 Remove-Item $rubyDownloadFile
 
