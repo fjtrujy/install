@@ -79,7 +79,7 @@ Write-Host "Preparing sandbox..."
 wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/calabash-sandbox.bat -OutFile $calabashSandboxBat
 
 $pathParts = New-Object System.Collections.Generic.List[string]
-$pathParts.AddRange($env:PATH.Split(";", [System.StringSplitOptions]::RemoveEmptyEntries))
+$pathParts.AddRange([Environment]::GetEnvironmentVariable("Path", "user").Split(";", [System.StringSplitOptions]::RemoveEmptyEntries))
 
 # Remove any ruby bin folders from the path
 Foreach ($dir in $pathParts.ToArray())
@@ -110,9 +110,8 @@ if (!($pathParts.Contains("${env:GEM_HOME}\bin")))
 
 $newPath = [string]::Join(";", $pathParts)
 
-
-[Environment]::SetEnvironmentVariable("Path", "${newPath}", "user")
-[Environment]::SetEnvironmentVariable("Path", "${newPath}", "process")
+[Environment]::SetEnvironmentVariable("Path", $newPath, "user")
+[Environment]::SetEnvironmentVariable("Path", $newPath, "process")
 
 $droidVersion = (calabash-android version) | Out-String
 $iosVersion = (calabash-ios version) | Out-String
