@@ -1,4 +1,4 @@
-## Calabash Sandbox (OSX Only)
+## Calabash Sandbox (OSX or Windows 10)
 
 To get up and running as fast as possible to use Calabash, we recommend you
 use our Ruby Sandbox. The sandbox is a pre-configured ruby environment that
@@ -9,9 +9,34 @@ Test Cloud, so you don't need to worry about ruby compatibilities.
 ### Installation
 
 Requires OSX Yosemite or El Capitan.
+Requires Windows 10 or higher.
+
+OSX:
 
 ```shell
 $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-osx.sh | bash
+```
+
+Windows:
+
+Download [install-windows.ps1](https://raw.githubusercontent.com/jonstoneman/install/feature/windows-sandbox/install-windows.ps1)
+
+In an admin power shell, run:
+```powershell
+set-executionpolicy unrestricted
+```
+
+Then run:
+
+```powershell
+cd Downloads
+./install-windows.ps1
+
+```
+
+Finally, run:
+```powershell
+set-executionpolicy restricted
 ```
 
 When installation completes, you should see something like the following:
@@ -62,6 +87,8 @@ in the sandbox's `GEM_HOME` and thus not be available outside of the sandbox.
 
 If you have altered your sandbox environment in a way you don't like and want
 to restore it to the original state, just run these commands:
+
+OSX
 
 ```shell
 $ rm -r ${HOME}/.calabash/sandbox
