@@ -76,7 +76,7 @@ Remove-Item $gemsDownloadFile
 
 #Download the Sandbox Script
 Write-Host "Preparing sandbox..."
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox.bat -OutFile $calabashSandboxBat
+wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/calabash-sandbox.bat -OutFile $calabashSandboxBat
 
 $pathParts = New-Object System.Collections.Generic.List[string]
 $pathParts.AddRange($env:PATH.Split(";", [System.StringSplitOptions]::RemoveEmptyEntries))
