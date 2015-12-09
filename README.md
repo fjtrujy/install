@@ -4,7 +4,10 @@ Two scripts for installing the Calabash gems on your computer.
 
 ## Installing on OS X
 
-On OS X Maverics and above, Ruby is already installed in version 2.0 or above.  The bad news is that using the system Ruby requires `sudo`.  We recommend [that you never install gems with sudo](https://github.com/calabash/calabash-ios/wiki/Best-Practice%3A--Never-install-gems-with-sudo).  We've created a tool called the `calabash-sandbox`.  You can read all about it in the [SANDBOX.README.md](SANDBOX.README.md).
+To simplify the installation of the Calabash gems and to minimize compatibility issues with the system Ruby that is provided by OS X Mavericks and above, we provide a tool called the _Calabash Sandbox_ .  You can read all about it in the [SANDBOX.README.md](SANDBOX.README.md).
+
+
+**Note:** You are strongly discouraged from [installing gems with `sudo`](https://github.com/calabash/calabash-ios/wiki/Best-Practice%3A--Never-install-gems-with-sudo).
 
 ```shell
 $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-osx.sh | bash
@@ -20,9 +23,7 @@ xamarin-test-cloud: 1.1.2
 Execute 'calabash-sandbox' to get started!
 ```
 
-When you execute `calabash-sandbox`, your Terminal window will open the
-sandbox environment. To leave the sandbox and return the terminal to its
-previous state, simply type `exit`.
+To start Calabash Sandbox, execute `calabash-sandbox` in a Terminal window. To leave the Sandbox and return the terminal to its previous state, type `exit`:
 
 ```shell
 $ calabash-sandbox
@@ -59,4 +60,3 @@ You can download the sample Gemfile with this command:
 ```
 curl -fsSL https://raw.githubusercontent.com/calabash/install/master/Gemfile -o Gemfile
 ```
-
