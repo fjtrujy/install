@@ -82,7 +82,7 @@ $pathParts = New-Object System.Collections.Generic.List[string]
 $pathParts.AddRange($env:PATH.Split(";", [System.StringSplitOptions]::RemoveEmptyEntries))
 
 # Remove any ruby bin folders from the path
-Foreach ($dir in $pathParts)
+Foreach ($dir in $pathParts.ToArray())
 {
     if (Test-Path "$dir\ruby.exe")
     {
