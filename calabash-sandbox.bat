@@ -12,7 +12,7 @@ echo.
 echo Calabash sandbox version: %SCRIPT_VERSION%
 echo.
 
-set CALABASH_RUBY_VERSION=ruby-2.1.5-i386-mingw32
+set CALABASH_RUBY_VERSION=ruby-2.1.5-p273
 set CALABASH_RUBY_PATH=%USERPROFILE%\.calabash\sandbox\Rubies\%CALABASH_RUBY_VERSION%\bin
 set CALABASH_GEM_HOME=%USERPROFILE%\.calabash\sandbox\Gems
 
