@@ -109,15 +109,6 @@ $folders.Add($calabashSandboxBin)
 $folders.Add($calabashRubyPath)
 $folders.Add("${env:GEM_HOME}\bin")
 
-$userPath = [Environment]::GetEnvironmentVariable("Path", "user");
-if (!$userPath)
-{
-    $userPath = ""
-}
-
-$newUserPath = Rewrite-Path $userPath $folders
-[Environment]::SetEnvironmentVariable("Path", $newUserPath, "user")
-
 $newProcessPath = Rewrite-Path $env:Path $folders
 [Environment]::SetEnvironmentVariable("Path", $newProcessPath, "process")
 
