@@ -106,6 +106,17 @@ wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/
 
 $folders = New-Object System.Collections.Generic.List[string]
 $folders.Add($calabashSandboxBin)
+
+$userPath = [Environment]::GetEnvironmentVariable("Path", "user");
+if (!$userPath)
+{
+    $userPath = ""
+}
+
+$newUserPath = Rewrite-Path $userPath $folders
+[Environment]::SetEnvironmentVariable("Path", $newUserPath, "user")
+
+$folders = New-Object System.Collections.Generic.List[string]
 $folders.Add($calabashRubyPath)
 $folders.Add("${env:GEM_HOME}\bin")
 
