@@ -86,5 +86,6 @@ echo "Done! Installed:"
 echo -e "\033[0;33mcalabash-ios:       $IOS"
 echo "calabash-android:   $DROID"
 echo -e "xamarin-test-cloud: $TESTCLOUD\033[00m"
+echo -e "Execute '\033[0;32m$CALABASH_SANDBOX update\033[00m' to check for gem updates."
 echo -e "Execute '\033[0;32m$CALABASH_SANDBOX\033[00m' to get started! "
 echo
