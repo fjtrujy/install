@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ "${SANDBOX_URL}" == ""]; then
+  SANDBOX_URL="https://raw.githubusercontent.com/calabash/install/master/calabash-sandbox"
+fi
+
 if [ "$(uname -s)" != "Darwin" ]; then
   echo "Calabash-sandbox only runs on Mac OSX"
   exit 1
@@ -57,9 +61,12 @@ echo "gem 'xamarin-test-cloud', '~> 1.0'" >> "${SANDBOX}/Gemfile"
 
 #Download the Sandbox Script
 echo "Preparing sandbox..."
+if [ "${DEBUG}" == 1 ]; then
+  echo "Downloading sandbox from ${SANDBOX_URL}"
+fi
 
 curl -L -O \
-  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox
+  --progress-bar "${SANDBOX_URL}"
 
 chmod a+x $CALABASH_SANDBOX
 mv $CALABASH_SANDBOX /usr/local/bin
