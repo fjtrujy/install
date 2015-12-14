@@ -17,7 +17,7 @@ set CALABASH_RUBY_PATH=%USERPROFILE%\.calabash\sandbox\Rubies\%CALABASH_RUBY_VER
 set CALABASH_GEM_HOME=%USERPROFILE%\.calabash\sandbox\Gems
 
 set GEM_HOME=%CALABASH_GEM_HOME%
-set GEM_PATH=%CALABASH_GEM_HOME%;%CALABASH_GEM_HOME%\ruby\2.0.0;%CALABASH_GEM_HOME%\ruby\2.1.0
+set GEM_PATH=%CALABASH_GEM_HOME%
 
 for %%a in ("%PATH:;=" "%") do (
   set directory=%%a
