@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "${SANDBOX_URL}" == ""]; then
+if [ "${SANDBOX_URL}" == "" ]; then
   SANDBOX_URL="https://raw.githubusercontent.com/calabash/install/master/calabash-sandbox"
 fi
 
@@ -41,7 +41,7 @@ rm "${CALABASH_RUBY_VERSION}.zip"
 echo "Installing gems, this may take a little while..."
 
 CALABASH_GEMS_FILE="CalabashGems.zip"
-if [ "${DEBUG}" == 1 ]; then
+if [ "${DEV}" == 1 ]; then
   CALABASH_GEMS_FILE="calabash-sandbox/dev/CalabashGems.zip"
   echo "[DEBUG]: Using calabash gems file: ${CALABASH_GEMS_FILE}"
 fi
