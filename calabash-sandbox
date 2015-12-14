@@ -26,7 +26,7 @@ elif [ "${1}" == "update" ]; then
   else
     mv Gemfile.OSX Gemfile
     # Install within sandbox to ensure gems are available in sandbox
-    { echo "bundle install >&2" |  "${THIS_SCRIPT}" 1>/dev/null; } 2>&1
+    { echo "bundle update >&2" |  "${THIS_SCRIPT}" 1>/dev/null; } 2>&1
     echo
     echo "Done! Now the sandbox contains:"
     IOS=$( { echo "calabash-ios version >&2" | "${THIS_SCRIPT}" 1>/dev/null; } 2>&1)
