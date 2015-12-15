@@ -38,10 +38,9 @@ do
 done
 
 #Need to ensure adb is accessible for android
-$(command -v adb)
+command -v adb > /dev/null
 if [ $? -eq 0 ]; then
   ADB=$(dirname $(which adb))
-  echo "Adding ${ADB} to path"
   COMPOSED_PATH="${COMPOSED_PATH}:${ADB}"
 fi
 
