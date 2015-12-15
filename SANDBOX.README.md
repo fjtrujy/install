@@ -19,8 +19,6 @@ $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-os
 
 Windows:
 
-Download [install-windows.ps1](https://raw.githubusercontent.com/jonstoneman/install/feature/windows-sandbox/install-windows.ps1)
-
 In an admin power shell, run:
 ```powershell
 set-executionpolicy unrestricted
@@ -29,8 +27,7 @@ set-executionpolicy unrestricted
 Then run:
 
 ```powershell
-cd Downloads
-./install-windows.ps1
+(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | powershell -command -
 
 ```
 
