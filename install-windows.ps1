@@ -124,11 +124,9 @@ $newProcessPath = Rewrite-Path $env:Path $folders
 [Environment]::SetEnvironmentVariable("Path", $newProcessPath, "process")
 
 $droidVersion = (calabash-android version) | Out-String
-$iosVersion = (calabash-ios version) | Out-String
 $testCloudVersion = (test-cloud version) | Out-String
 
 Write-Host "Done! Installed:"
-Write-Host "calabash-ios:       $iosVersion"
 Write-Host "calabash-android:   $droidVersion"
 Write-Host "xamarin-test-cloud: $testCloudVersion"
 Write-host "Execute 'calabash-sandbox' to get started! "
