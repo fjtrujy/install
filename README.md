@@ -43,7 +43,7 @@ xamarin-test-cloud: 1.1.2
 Execute 'calabash-sandbox' to get started!
 ```
 
-You can execute `calabash-sandbox update` at any time to fetch the latest gems. 
+You can execute `calabash-sandbox update` at any time to fetch the latest gems.
 
 ### Usage
 
@@ -84,11 +84,18 @@ in the sandbox's `GEM_HOME` and thus not be available outside of the sandbox.
 If you have altered your sandbox environment in a way you don't like and want
 to restore it to the original state, just run these commands:
 
+OSX:
 ```shell
 $ rm -r ${HOME}/.calabash/sandbox
 $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-osx.sh | bash
 ```
 
+Windows:
+In a powershell,
+```powershell
+del /S %USERPROFILE%\.calabash\sandbox
+```
+Then follow the install instructions above. 
 
 ## Troubleshooting
 
