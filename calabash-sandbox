@@ -1,15 +1,42 @@
 #!/usr/bin/env bash
 
-SCRIPT_VERSION="0.1.2"
+SCRIPT_VERSION="0.1.3"
+
+SANDBOX="${HOME}/.calabash/sandbox"
+THIS_SCRIPT=$(basename $0)
 
 if [ "$(uname -s)" != "Darwin" ]; then
   echo "Calabash-sandbox only runs on Mac OSX"
   exit 1
 fi
 
-if [ $# == 1 ]; then
+if [ "${1}" == "version" ]; then
   echo "Calabash sandbox version: ${SCRIPT_VERSION}"
   exit 0
+elif [ "${1}" == "update" ]; then
+  echo "Updating gems..."
+  cd "${SANDBOX}"
+  curl -O --fail --progress-bar \
+    https://raw.githubusercontent.com/calabash/install/master/Gemfile.OSX 2> /dev/null
+
+  EC=$?
+  if [ $EC -ne 0 ]; then
+    echo "Unable to download newest Gemfile. Please try again."
+    exit $EC
+  else
+    mv Gemfile.OSX Gemfile
+    # Install within sandbox to ensure gems are available in sandbox
+    { echo "bundle update >&2" |  "${THIS_SCRIPT}" 1>/dev/null; } 2>&1
+    echo
+    echo "Done! Now the sandbox contains:"
+    IOS=$( { echo "calabash-ios version >&2" | "${THIS_SCRIPT}" 1>/dev/null; } 2>&1)
+    DROID=$( { echo "calabash-android version >&2" | "${THIS_SCRIPT}" 1>/dev/null; } 2>&1)
+    TCS=$( { echo "test-cloud version >&2" | "${THIS_SCRIPT}" 1>/dev/null; } 2>&1)
+    echo -e "\033[0;33mcalabash-ios:       $IOS"
+    echo "calabash-android:   $DROID"
+    echo -e "xamarin-test-cloud: $TCS\033[00m"
+    exit 0
+  fi
 fi
 
 CALABASH_RUBY_VERSION="2.1.5-p273"
