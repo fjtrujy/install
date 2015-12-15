@@ -93,9 +93,9 @@ $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-os
 Windows:
 In a powershell,
 ```powershell
-del /S %USERPROFILE%\.calabash\sandbox
+Remove-Item -Recurse -Force "${env:USERPROFILE}\.calabash\sandbox"
 ```
-Then follow the install instructions above. 
+Then follow the install instructions above.
 
 ## Troubleshooting
 
