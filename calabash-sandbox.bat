@@ -43,7 +43,7 @@ if "%1" == "update" (
     for /f "delims=" %%i in ('"forfiles /m Gemfile /c "cmd /c echo @fdate @ftime" "') do set OriginalGemfileDate=%%i	
   )
   
-  bitsadmin.exe /transfer DownloadingGemfile https://raw.githubusercontent.com/calabash/install/feature/windows-sandbox/Gemfile.Windows !CALABASH_SANDBOX!\Gemfile > nul
+  bitsadmin.exe /transfer DownloadingGemfile https://raw.githubusercontent.com/calabash/install/master/Gemfile.Windows !CALABASH_SANDBOX!\Gemfile > nul
     
   if !GemfileExists!==0 (
     if not exist Gemfile (
