@@ -129,5 +129,6 @@ $testCloudVersion = (test-cloud version) | Out-String
 Write-Host "Done! Installed:"
 Write-Host "calabash-android:   $droidVersion"
 Write-Host "xamarin-test-cloud: $testCloudVersion"
-Write-host "Execute 'calabash-sandbox' to get started! "
+Write-host "Execute 'calabash-sandbox updae' to check for gem updates."
+Write-host "Execute 'calabash-sandbox' to get started!"
 Write-Host ""
