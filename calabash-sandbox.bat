@@ -10,6 +10,8 @@ if "%1" == "version" (
   GOTO:EOF
 )
 
+for /f "delims=" %%i in ('echo %CMDCMDLINE% ^| findstr "calabash-sandbox.bat"') do set powershellCommand=%%i
+
 set CALABASH_SANDBOX=%USERPROFILE%\.calabash\sandbox
 set CALABASH_RUBY_VERSION=ruby-2.1.5-p273
 set CALABASH_RUBY_PATH=%CALABASH_SANDBOX%\Rubies\%CALABASH_RUBY_VERSION%\bin
@@ -76,7 +78,9 @@ if "%1" == "update" (
 )
 
 title Calabash Sandbox
-color 0a
+if "%powershellCommand%"=="" (
+  color 0b
+)
 cls
 
 echo.
@@ -87,6 +91,12 @@ endlocal & (
   set "PATH=%CALABASH_RUBY_PATH%;%GEM_HOME%\bin;%CALABASH_SANDBOX_PATH%"
   set GEM_HOME=%GEM_HOME%
   set GEM_PATH=%GEM_PATH%
+  
+  set PROMPT=[calabash] $p$g
+  
+  if not "%powershellCommand%"=="" (
+    cmd /k echo type 'exit' to return to powershell when done
+  )
 )
 
 
