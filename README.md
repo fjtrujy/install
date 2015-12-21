@@ -25,7 +25,7 @@ set-executionpolicy unrestricted
 
 then
 ```powershell
-(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | powershell -command -
+(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
 ```
 
 Post-installation, execute the following in an administrator Powershell:
@@ -104,7 +104,7 @@ set-executionpolicy unrestricted
 
 then
 ```powershell
-(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | powershell -command -
+(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
 ```
 
 Post-installation, execute the following in an administrator Powershell:
