@@ -89,20 +89,24 @@ $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-os
 
 ##### Windows:
 In a powershell,
-```rm -r -fo "${env:USERPROFILE}\.calabash\sandbox"
+```powershell
+rm -r -fo "${env:USERPROFILE}\.calabash\sandbox"
 ```
 
 In an administrator Powershell:
 
-```set-executionpolicy unrestricted
+```powershell
+set-executionpolicy unrestricted
 ```
 
 then
-```(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
+```powershell
+(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
 ```
 
 Post-installation, execute the following in an administrator Powershell:
-```set-executionpolicy restricted
+```powershell
+set-executionpolicy restricted
 ```
 
 
