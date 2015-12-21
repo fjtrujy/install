@@ -9,8 +9,12 @@ if "%1" == "version" (
   echo Calabash sandbox version: %SCRIPT_VERSION%
   GOTO:EOF
 )
-
+set powershellCommand=null
+set powershellUpdateCommand=null
 for /f "delims=" %%i in ('echo %CMDCMDLINE% ^| findstr "calabash-sandbox.bat"') do set powershellCommand=%%i
+for /f "delims=" %%i in ('echo %CMDCMDLINE% ^| findstr " update"') do set powershellUpdateCommand=%%i
+set powershellCommand=%powershellCommand:~0,4%
+set powershellUpdateCommand=%powershellUpdateCommand:~0,4%
 
 set CALABASH_SANDBOX=%USERPROFILE%\.calabash\sandbox
 set CALABASH_RUBY_VERSION=ruby-2.1.6-p336
@@ -35,7 +39,7 @@ for %%a in ("%PATH:;=" "%") do (
 if "%1" == "update" (
   echo.
   echo Updating gems...
-  
+    
   set CurrentDirectory=%cd%
   cd %CALABASH_SANDBOX% > nul
   
@@ -72,13 +76,14 @@ if "%1" == "update" (
   
   echo calabash-android:   !AndroidVersion!
   echo xamarin-test-cloud: !TestCloudVersion! 
+  echo.
   
   cd %CurrentDirectory% > nul
   GOTO:EOF
 )
 
 title Calabash Sandbox
-if "%powershellCommand%"=="" (
+if "%powershellCommand%"=="null" (
   color 0b
 )
 cls
@@ -91,11 +96,13 @@ endlocal & (
   set "PATH=%CALABASH_RUBY_PATH%;%GEM_HOME%\bin;%CALABASH_SANDBOX_PATH%"
   set GEM_HOME=%GEM_HOME%
   set GEM_PATH=%GEM_PATH%
-  
+    
   set PROMPT=[calabash] $p$g
   
-  if not "%powershellCommand%"=="" (
-    cmd /k echo type 'exit' to return to powershell when done
+  if not "%powershellCommand%"=="null" (
+    if "%powershellUpdateCommand%"=="null" (
+      cmd /k echo type 'exit' to return to powershell when done	
+	)
   )
 )
 
