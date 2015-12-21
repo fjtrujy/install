@@ -119,6 +119,7 @@ $newUserPath = Rewrite-Path $userPath $folders
 $folders = New-Object System.Collections.Generic.List[string]
 $folders.Add($calabashRubyPath)
 $folders.Add("${env:GEM_HOME}\bin")
+$folders.Add($calabashSandboxBin)
 
 $newProcessPath = Rewrite-Path $env:Path $folders
 [Environment]::SetEnvironmentVariable("Path", $newProcessPath, "process")
