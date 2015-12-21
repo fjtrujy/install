@@ -19,18 +19,15 @@ $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-os
 
 In an administrator Powershell:
 
-```powershell
-set-executionpolicy unrestricted
+```set-executionpolicy unrestricted
 ```
 
 then
-```powershell
-(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
+```(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
 ```
 
 Post-installation, execute the following in an administrator Powershell:
-```powershell
-set-executionpolicy restricted
+```set-executionpolicy restricted
 ```
 
 When installation completes, you should see something like the following:
@@ -92,24 +89,20 @@ $ curl -sSL https://raw.githubusercontent.com/calabash/install/master/install-os
 
 ##### Windows:
 In a powershell,
-```powershell
-rm -r -fo "${env:USERPROFILE}\.calabash\sandbox"
+```rm -r -fo "${env:USERPROFILE}\.calabash\sandbox"
 ```
 
 In an administrator Powershell:
 
-```powershell
-set-executionpolicy unrestricted
+```set-executionpolicy unrestricted
 ```
 
 then
-```powershell
-(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
+```(New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/calabash/install/master/install-windows.ps1") | iex
 ```
 
 Post-installation, execute the following in an administrator Powershell:
-```powershell
-set-executionpolicy restricted
+```set-executionpolicy restricted
 ```
 
 
