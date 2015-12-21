@@ -38,13 +38,13 @@ $ErrorActionPreference = "Stop"
 
 $sandbox="${env:USERPROFILE}\.calabash\sandbox"
 $calabashRubiesHome="${sandbox}\Rubies"
-$calabashRubyVersion="ruby-2.1.5-p273"
+$calabashRubyVersion="ruby-2.1.6-p336"
 $calabashRubyPath="${calabashRubiesHome}\${calabashRubyVersion}\bin"
 $calabashSandboxBin="${sandbox}\bin"
 $calabashSandboxBat="${calabashSandboxBin}\calabash-sandbox.bat"
 
 $env:GEM_HOME="${sandbox}\Gems"
-$env:GEM_PATH="${env:GEM_HOME};${calabashRubiesHome}\${calabashRubyVersion}\lib\ruby\gems\2.1.0\gems\"
+$env:GEM_PATH="${env:GEM_HOME}"
 
 #Don't auto-overwrite the sandbox if it already exists
 if (Test-Path $sandbox)
