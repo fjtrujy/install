@@ -102,7 +102,7 @@ Remove-Item $gemsDownloadFile
 
 #Download the Sandbox Script
 Write-Host "Preparing sandbox..."
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/calabash-sandbox.bat -OutFile $calabashSandboxBat
+wget https://raw.githubusercontent.com/calabash/install/master/calabash-sandbox.bat -OutFile $calabashSandboxBat
 
 $folders = New-Object System.Collections.Generic.List[string]
 $folders.Add($calabashSandboxBin)
