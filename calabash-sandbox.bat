@@ -13,7 +13,7 @@ if "%1" == "version" (
 for /f "delims=" %%i in ('echo %CMDCMDLINE% ^| findstr "calabash-sandbox.bat"') do set powershellCommand=%%i
 
 set CALABASH_SANDBOX=%USERPROFILE%\.calabash\sandbox
-set CALABASH_RUBY_VERSION=ruby-2.1.5-p273
+set CALABASH_RUBY_VERSION=ruby-2.1.6-p336
 set CALABASH_RUBY_PATH=%CALABASH_SANDBOX%\Rubies\%CALABASH_RUBY_VERSION%\bin
 set CALABASH_GEM_HOME=%CALABASH_SANDBOX%\Gems
 
