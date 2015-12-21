@@ -126,6 +126,7 @@ $newProcessPath = Rewrite-Path $env:Path $folders
 $droidVersion = (calabash-android version) | Out-String
 $testCloudVersion = (test-cloud version) | Out-String
 
+Write-Host ""
 Write-Host "Done! Installed:"
 Write-Host "calabash-android:   $droidVersion"
 Write-Host "xamarin-test-cloud: $testCloudVersion"
