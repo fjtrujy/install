@@ -38,13 +38,13 @@ $ErrorActionPreference = "Stop"
 
 $sandbox="${env:USERPROFILE}\.calabash\sandbox"
 $calabashRubiesHome="${sandbox}\Rubies"
-$calabashRubyVersion="ruby-2.1.5-p273"
+$calabashRubyVersion="ruby-2.1.6-p336"
 $calabashRubyPath="${calabashRubiesHome}\${calabashRubyVersion}\bin"
 $calabashSandboxBin="${sandbox}\bin"
 $calabashSandboxBat="${calabashSandboxBin}\calabash-sandbox.bat"
 
 $env:GEM_HOME="${sandbox}\Gems"
-$env:GEM_PATH="${env:GEM_HOME};${calabashRubiesHome}\${calabashRubyVersion}\lib\ruby\gems\2.1.0\gems\"
+$env:GEM_PATH="${env:GEM_HOME}"
 
 #Don't auto-overwrite the sandbox if it already exists
 if (Test-Path $sandbox)
@@ -89,7 +89,7 @@ if (!(Test-Path $calabashSandboxBin))
 Write-Host "Preparing Ruby ${calabashRubyVersion}..."
 $currentDirectory = (Resolve-Path .\).Path
 $rubyDownloadFile = "$currentDirectory\${calabashRubyVersion}-win32.zip"
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/ruby-2.1.5-p273-win32.zip -OutFile $rubyDownloadFile
+wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/${calabashRubyVersion}-win32.zip -OutFile $rubyDownloadFile
 Expand-ZIPFile $rubyDownloadFile $calabashRubiesHome
 Remove-Item $rubyDownloadFile
 
@@ -102,7 +102,7 @@ Remove-Item $gemsDownloadFile
 
 #Download the Sandbox Script
 Write-Host "Preparing sandbox..."
-wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/calabash-sandbox.bat -OutFile $calabashSandboxBat
+wget https://raw.githubusercontent.com/calabash/install/master/calabash-sandbox.bat -OutFile $calabashSandboxBat
 
 $folders = New-Object System.Collections.Generic.List[string]
 $folders.Add($calabashSandboxBin)
@@ -119,6 +119,7 @@ $newUserPath = Rewrite-Path $userPath $folders
 $folders = New-Object System.Collections.Generic.List[string]
 $folders.Add($calabashRubyPath)
 $folders.Add("${env:GEM_HOME}\bin")
+$folders.Add($calabashSandboxBin)
 
 $newProcessPath = Rewrite-Path $env:Path $folders
 [Environment]::SetEnvironmentVariable("Path", $newProcessPath, "process")
@@ -126,8 +127,10 @@ $newProcessPath = Rewrite-Path $env:Path $folders
 $droidVersion = (calabash-android version) | Out-String
 $testCloudVersion = (test-cloud version) | Out-String
 
+Write-Host ""
 Write-Host "Done! Installed:"
 Write-Host "calabash-android:   $droidVersion"
 Write-Host "xamarin-test-cloud: $testCloudVersion"
-Write-host "Execute 'calabash-sandbox' to get started! "
+Write-host "Execute 'calabash-sandbox update' to check for gem updates."
+Write-host "Execute 'calabash-sandbox' to get started!"
 Write-Host ""
