@@ -11,7 +11,7 @@ fi
 
 export GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 CALABASH_RUBIES_HOME="${HOME}/.calabash/sandbox/Rubies"
-CALABASH_RUBY_VERSION="2.1.5-p273"
+CALABASH_RUBY_VERSION="2.1.6-p336"
 SANDBOX="${HOME}/.calabash/sandbox"
 CALABASH_SANDBOX="calabash-sandbox"
 
@@ -32,7 +32,7 @@ echo "Preparing Ruby ${CALABASH_RUBY_VERSION}..."
 
 curl -o \
   "${CALABASH_RUBY_VERSION}.zip" \
-  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/2.1.5-p273.zip
+  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/${CALABASH_RUBY_VERSION}.zip
 
 unzip -qo "${CALABASH_RUBY_VERSION}.zip" -d "${CALABASH_RUBIES_HOME}"
 rm "${CALABASH_RUBY_VERSION}.zip"

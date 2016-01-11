@@ -39,7 +39,7 @@ elif [ "${1}" == "update" ]; then
   fi
 fi
 
-CALABASH_RUBY_VERSION="2.1.5-p273"
+CALABASH_RUBY_VERSION="2.1.6-p336"
 CALABASH_RUBY_PATH="${HOME}/.calabash/sandbox/Rubies/${CALABASH_RUBY_VERSION}/bin"
 CALABASH_GEM_HOME="${HOME}/.calabash/sandbox/Gems"
 export GEM_HOME="${CALABASH_GEM_HOME}"
