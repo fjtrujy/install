@@ -1,12 +1,4 @@
-function Expand-ZIPFile($file, $destination)
-{
-    $shell = new-object -com shell.application
-    $zip = $shell.NameSpace($file)
-    foreach($item in $zip.items())
-    {
-        $shell.Namespace($destination).copyhere($item, 0x14)
-    }
-}
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 function Rewrite-Path($path, $folders)
 {
@@ -50,7 +42,7 @@ $env:GEM_PATH="${env:GEM_HOME}"
 if (Test-Path $sandbox)
 {
     $title = "Overwrite Sandbox"
-    $message = "Sandbox already exists! Do you want to overwrite?"
+    $message = "Sandbox already exists! Do you want to overwrite? (any gems you've installed will be removed)"
 	
     $yes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", `
         "Replaces the $sandbox folder"
@@ -72,14 +64,18 @@ if (Test-Path $sandbox)
     }
 }
 
-if (!(Test-Path $env:GEM_HOME))
+if (Test-Path $env:GEM_HOME)
 {
-    New-Item $env:GEM_HOME -type directory | Out-Null
+    Remove-Item $env:GEM_HOME -Force -Recurse 
 }
-if (!(Test-Path $calabashRubiesHome))
+New-Item $env:GEM_HOME -type directory | Out-Null
+
+if (Test-Path $calabashRubiesHome)
 {
-    New-Item $calabashRubiesHome -type directory | Out-Null
+    Remove-Item $calabashRubiesHome -Force -Recurse     
 }
+New-Item $calabashRubiesHome -type directory | Out-Null
+
 if (!(Test-Path $calabashSandboxBin))
 {
     New-Item $calabashSandboxBin -type directory | Out-Null
@@ -90,14 +86,14 @@ Write-Host "Preparing Ruby ${calabashRubyVersion}..."
 $currentDirectory = (Resolve-Path .\).Path
 $rubyDownloadFile = "$currentDirectory\${calabashRubyVersion}-win32.zip"
 wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/${calabashRubyVersion}-win32.zip -OutFile $rubyDownloadFile
-Expand-ZIPFile $rubyDownloadFile $calabashRubiesHome
+[System.IO.Compression.ZipFile]::ExtractToDirectory($rubyDownloadFile, $calabashRubiesHome)
 Remove-Item $rubyDownloadFile
 
 #Download the gems and their dependencies
 Write-Host "Installing gems, this may take a little while..."
 $gemsDownloadFile = "$currentDirectory\CalabashGems-win32.zip"
 wget https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/CalabashGems-win32.zip -OutFile $gemsDownloadFile
-Expand-ZIPFile $gemsDownloadFile $sandbox
+[System.IO.Compression.ZipFile]::ExtractToDirectory($gemsDownloadFile, $sandbox)
 Remove-Item $gemsDownloadFile
 
 #Download the Sandbox Script
