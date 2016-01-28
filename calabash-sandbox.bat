@@ -41,7 +41,7 @@ if "%1" == "update" (
   echo Updating gems...
     
   set CurrentDirectory=%cd%
-  cd %CALABASH_SANDBOX% > nul
+  cd "%CALABASH_SANDBOX%" > nul
   
   set GemfileExists=0
   if exist Gemfile (
@@ -49,20 +49,20 @@ if "%1" == "update" (
     for /f "delims=" %%i in ('"forfiles /m Gemfile /c "cmd /c echo @fdate @ftime" "') do set OriginalGemfileDate=%%i	
   )
   
-  bitsadmin.exe /transfer DownloadingGemfile https://raw.githubusercontent.com/calabash/install/master/Gemfile.Windows !CALABASH_SANDBOX!\Gemfile > nul
+  bitsadmin.exe /transfer DownloadingGemfile https://raw.githubusercontent.com/calabash/install/master/Gemfile.Windows "!CALABASH_SANDBOX!\Gemfile" > nul
     
   if !GemfileExists!==0 (
     if not exist Gemfile (
       echo.
       echo Unable to download newest Gemfile, please try again.
-      cd %CurrentDirectory% > nul
+      cd "%CurrentDirectory%" > nul
       GOTO:EOF
     )
   ) else (
     for /f "delims=" %%i in ('"forfiles /m Gemfile /c "cmd /c echo @fdate @ftime" "') do set CurrentGemfileDate=%%i	
     if "!OriginalGemfileDate!" == "!CurrentGemfileDate!" (
       echo Unable to download newest Gemfile, please try again.
-	  cd %CurrentDirectory% > nul
+	  cd "%CurrentDirectory%" > nul
       GOTO:EOF
     )
   )
@@ -78,7 +78,7 @@ if "%1" == "update" (
   echo xamarin-test-cloud: !TestCloudVersion! 
   echo.
   
-  cd %CurrentDirectory% > nul
+  cd "%CurrentDirectory%" > nul
   GOTO:EOF
 )
 
