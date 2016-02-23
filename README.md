@@ -79,6 +79,23 @@ machine, including installed gems. The sandbox shell is launched with a `PATH`,
 If you install new gems while running in the sandbox, they will be installed
 in the sandbox's `GEM_HOME` and thus not be available outside of the sandbox.
 
+#### Building native extensions on Windows
+
+When installing gems that build native extensions on Windows you may get the following error:
+
+```shell
+ERROR: Failed to build gem native extension.
+```
+
+To resolve this you must provide the Calabash sandbox installation of ruby with the RubyInstaller Development Kit:
+
+1. Download DevKit from http://rubyinstaller.org/downloads/ making sure you get the version for 32bit versions of Ruby 2.0 and above
+- Install DevKit into `C:\DevKit`
+- Launch the Calabash sandbox `calabash-sandbox`
+- Execute `cd C:\DevKit\ && ruby dk.rb init`
+- Add the line `- C:\Users\jon\.calabash\sandbox\Rubies\ruby-2.1.6-p336` to `C:\DevKit\config.yml` if it doesn’t already exist
+- Execute `ruby dk.rb install`
+
 #### Restoring the sandbox
 
 If you have altered your sandbox environment in a way you don't like and want
