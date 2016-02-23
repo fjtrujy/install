@@ -93,7 +93,10 @@ To resolve this you must provide the Calabash sandbox installation of ruby with 
 - Install DevKit into `C:\DevKit`
 - Launch the Calabash sandbox `calabash-sandbox`
 - Execute `cd C:\DevKit\ && ruby dk.rb init`
-- Add the line `- C:\Users\<user>\.calabash\sandbox\Rubies\ruby-2.1.6-p336` (replacing `<user>` with your user directory) to `C:\DevKit\config.yml` if it doesn’t already exist
+- Add the following line (replacing `<user>` with your user directory) to `C:\DevKit\config.yml` if it doesn’t already exist:
+  ```
+  - C:\Users\<user>\.calabash\sandbox\Rubies\ruby-2.1.6-p336
+  ```
 - Execute `ruby dk.rb install`
 
 #### Restoring the sandbox
