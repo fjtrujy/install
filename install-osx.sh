@@ -17,11 +17,9 @@ CALABASH_SANDBOX="calabash-sandbox"
 
 #Don't auto-overwrite the sandbox if it already exists
 if [ -d "${SANDBOX}" ]; then
-  echo "Sandbox already exists! Do you want to overwrite? (y/n)"
-  read -n 1 -s ANSWER
-  if [ "${ANSWER}" != "y" ]; then
-    exit 0
-  fi
+  echo "Sandbox already exists!"
+  echo "Please delete the directory ${SANDBOX} and try again"
+  exit 1
 fi
 
 mkdir -p "$GEM_HOME"

@@ -24,8 +24,8 @@ cd "${TMP_DIR}"
 
 set -e
 
-IOS_EXPECTED_VERSION="0.18.1"
-DROID_EXPECTED_VERSION="0.6.0"
+IOS_EXPECTED_VERSION="0.18.2"
+DROID_EXPECTED_VERSION="0.7.2"
 
 DROID=$( { echo "calabash-android version >&2" |  calabash-sandbox 1>/dev/null; } 2>&1)
 IOS=$( { echo "calabash-ios version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
@@ -33,13 +33,13 @@ gem_home=$( { echo "echo \$GEM_HOME >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
 
 echo "Testing calabash-android version"
 if [ "${DROID}" != "${DROID_EXPECTED_VERSION}" ]; then
-  echo "calabash-android version ($DROID) should be 0.15.5"
+  echo "calabash-android version ($DROID) should be $DROID_EXPECTED_VERSION"
   exit 1
 fi
 
 echo "Testing calabash-ios version"
 if [ "${IOS}" != "${IOS_EXPECTED_VERSION}" ]; then
-  echo "calabash-ios version ($IOS) should be 0.17.0"
+  echo "calabash-ios version ($IOS) should be $IOS_EXPECTED_VERSION"
   exit 2
 fi
 
