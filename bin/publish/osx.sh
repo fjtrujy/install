@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 function banner {
   echo ""
   echo "$(tput setaf 5)######## $1 #######$(tput sgr0)"
