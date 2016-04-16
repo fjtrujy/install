@@ -18,7 +18,11 @@ CALABASH_SANDBOX="calabash-sandbox"
 #Don't auto-overwrite the sandbox if it already exists
 if [ -d "${SANDBOX}" ]; then
   echo "Sandbox already exists!"
-  echo "Please delete the directory ${SANDBOX} and try again"
+  echo "Please delete the directory:"
+  echo ""
+  echo "  ${SANDBOX}"
+  echo ""
+  echo "and try again."
   exit 1
 fi
 
