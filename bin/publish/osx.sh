@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 function banner {
   echo ""
   echo "$(tput setaf 5)######## $1 #######$(tput sgr0)"
@@ -17,7 +19,7 @@ function error {
 
 #usage: validate_cmd <exit_code> <action_message> <error_code_if_unsuccessful>
 function validate_cmd {
-  if [ $1 -ne 0 ]; then 
+  if [ $1 -ne 0 ]; then
     error "Error $2" $3
   fi
 }
@@ -42,7 +44,7 @@ cp "./Gemfile.OSX" "${SANDBOX}/Gemfile"
 
 validate_cmd $? "copying Gemfile.OSX" 10
 
-if [ ! -d "${SANDBOX}" ]; then 
+if [ ! -d "${SANDBOX}" ]; then
   error "Sandbox dir does note exist! Make sure you have a sandbox installation first." 11
 fi
 cd "${SANDBOX}"
