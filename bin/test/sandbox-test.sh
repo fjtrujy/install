@@ -24,8 +24,8 @@ cd "${TMP_DIR}"
 
 set -e
 
-IOS_EXPECTED_VERSION="0.18.2"
-DROID_EXPECTED_VERSION="0.7.2"
+IOS_EXPECTED_VERSION="0.19.0"
+DROID_EXPECTED_VERSION="0.7.3"
 
 DROID=$( { echo "calabash-android version >&2" |  calabash-sandbox 1>/dev/null; } 2>&1)
 IOS=$( { echo "calabash-ios version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
