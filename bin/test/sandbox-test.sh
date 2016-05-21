@@ -29,12 +29,13 @@ set -e
 
 ./install-osx.sh
 
-
 IOS_EXPECTED_VERSION="0.19.1"
 DROID_EXPECTED_VERSION="0.7.3"
+XTC_EXPECTED_VERSION="2.0.0.pre5"
 
 DROID=$( { echo "calabash-android version >&2" |  calabash-sandbox 1>/dev/null; } 2>&1)
 IOS=$( { echo "calabash-ios version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
+XTC=$( { echo "test-cloud version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
 gem_home=$( { echo "echo \$GEM_HOME >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
 
 echo "Testing calabash-android version"
@@ -47,10 +48,15 @@ if [ "${IOS}" != "${IOS_EXPECTED_VERSION}" ]; then
   error "calabash-ios version ($IOS) should be $IOS_EXPECTED_VERSION" 2
 fi
 
+echo "Testing test-cloud version"
+if [ "${XTC}" != "${XTC_EXPECTED_VERSION}" ]; then
+  error "test-cloud version ($XTC) should be $XTC_EXPECTED_VERSION" 3
+fi
+
 echo "Ensuring sandbox GEM_HOME properly set"
 if [ "${gem_home}" != "${HOME}/.calabash/sandbox/Gems" ]; then
   echo "Gem Home should be ${HOME}/.calabash/sandbox/Gems; Got $gem_home"
-  exit 3
+  exit 4
 fi
 
 if [ ! -z "${TRAVIS}" ]; then
