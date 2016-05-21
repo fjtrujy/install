@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+function error {
+  echo "$(tput setaf 1)ERROR: $1$(tput sgr0)"
+  exit $2
+}
+
 # In the absence of a --no-input option, we need to clear an existing sandbox
 # before we test on Jenkins, otherwise the test will block waiting for input.
 #
@@ -33,14 +38,12 @@ gem_home=$( { echo "echo \$GEM_HOME >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
 
 echo "Testing calabash-android version"
 if [ "${DROID}" != "${DROID_EXPECTED_VERSION}" ]; then
-  echo "calabash-android version ($DROID) should be $DROID_EXPECTED_VERSION"
-  exit 1
+  error "calabash-android version ($DROID) should be $DROID_EXPECTED_VERSION" 1
 fi
 
 echo "Testing calabash-ios version"
 if [ "${IOS}" != "${IOS_EXPECTED_VERSION}" ]; then
-  echo "calabash-ios version ($IOS) should be $IOS_EXPECTED_VERSION"
-  exit 2
+  error "calabash-ios version ($IOS) should be $IOS_EXPECTED_VERSION" 2
 fi
 
 echo "Ensuring sandbox GEM_HOME properly set"
