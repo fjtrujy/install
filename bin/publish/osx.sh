@@ -40,13 +40,16 @@ sed -i .bak "s/${VERSION}/${NEW_VERSION}/" calabash-sandbox
 
 info "Retrieving Gemfile"
 SANDBOX="${HOME}/.calabash/sandbox"
-cp "./Gemfile.OSX" "${SANDBOX}/Gemfile"
-
-validate_cmd $? "copying Gemfile.OSX" 10
 
 if [ ! -d "${SANDBOX}" ]; then
   error "Sandbox dir does note exist! Make sure you have a sandbox installation first." 11
 fi
+
+info "Updating Gemfile and Gemfile.lock"
+cp "./Gemfile.OSX" "${SANDBOX}/Gemfile"
+
+validate_cmd $? "copying Gemfile.OSX" 10
+
 cd "${SANDBOX}"
 GEMS_DIR=Gems
 
