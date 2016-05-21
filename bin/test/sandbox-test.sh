@@ -25,9 +25,10 @@ cp -r bin/test/cucumber "${TMP_DIR}"
 
 cd "${TMP_DIR}"
 
+set -e
+
 ./install-osx.sh
 
-set -e
 
 IOS_EXPECTED_VERSION="0.19.1"
 DROID_EXPECTED_VERSION="0.7.3"
