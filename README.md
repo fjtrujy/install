@@ -37,7 +37,6 @@ When installation completes, you should see something like the following:
 
 ```shell
 Done! Installed:
-calabash-ios:       0.16.4
 calabash-android:   0.5.15
 xamarin-test-cloud: 1.1.2
 Execute 'calabash-sandbox' to get started!
