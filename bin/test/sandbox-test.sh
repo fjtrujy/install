@@ -59,36 +59,3 @@ if [ "${gem_home}" != "${HOME}/.calabash/sandbox/Gems" ]; then
   exit 4
 fi
 
-if [ ! -z "${TRAVIS}" ]; then
-  echo "Integration tests don't run on Travis."
-  echo "Done!"
-  exit 0
-fi
-
-git clone https://github.com/calabash/calabash-ios-server.git
-
-cd calabash-ios-server
-bundle install
-make app-cal
-
-mv Products/test-target/app-cal/LPTestTarget.app \
-  ../cucumber
-
-cd ../cucumber
-
-mkdir -p results
-
-# Fails silently.
-#
-# [ENV] cucumber [args]
-# echo "$?" > exit.out
-#
-# exit.out is always 0
-#
-# Will have to rely on post-processing of results/cucumber.json
-calabash-sandbox <<EOF
-APP=./LPTestTarget.app cucumber --format pretty --format json -o results/cucumber.json 2>&1 | tee stdout.log
-echo $? > exit_code.log
-exit
-EOF
-
