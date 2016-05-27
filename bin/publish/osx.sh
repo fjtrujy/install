@@ -27,16 +27,8 @@ function validate_cmd {
 banner "Updating Calabash Sandbox Gems"
 info "If you're not a maintainer, don't run this script!"
 
-VERSION_LINE=`cat calabash-sandbox | grep SCRIPT_VERSION=`
-VERSION=`echo $VERSION_LINE | cut -d= -f2 | cut -d\" -f2 | cut -d\" -f1`
-MAJOR=`echo $VERSION | cut -d. -f1`
-MINOR=`echo $VERSION | cut -d. -f2`
-SUB=`echo $VERSION | cut -d. -f3`
-SUB=$(($SUB + 1))
-NEW_VERSION="$MAJOR.$MINOR.$SUB"
-banner "Updating sandbox version to $NEW_VERSION"
-
-sed -i .bak "s/${VERSION}/${NEW_VERSION}/" calabash-sandbox
+# Create a reference to the ./calabash-sandbox script.
+SANDBOX_SCRIPT="${PWD}/calabash-sandbox"
 
 info "Retrieving Gemfile"
 SANDBOX="${HOME}/.calabash/sandbox"
