@@ -12,6 +12,9 @@ function info {
   echo "$(tput setaf 2)INFO: $1$(tput sgr0)"
 }
 
+function version {
+  echo "$(tput setaf 3)$1: $2$(tput sgr0)"
+}
 function error {
   echo "$(tput setaf 1)ERROR: $1$(tput sgr0)"
   exit $2
@@ -46,8 +49,16 @@ cd "${SANDBOX}"
 GEMS_DIR=Gems
 
 info "Installing Gems"
-calabash-sandbox update
-validate_cmd $? "installing gems" 3
+bundle update
+echo
+
+info "Done! Now the sandbox contains:"
+IOS=`calabash-ios version | tr -d '\n'`
+DROID=`calabash-android version | tr -d '\n'`
+XTC=`test-cloud version | tr -d '\n'`
+version "      calabash-ios" $IOS
+version "  calabash-android" $DROID
+version "xamarin-test-cloud" $XTC
 
 info "Zipping Gems"
 zip -qr CalabashGems.zip $GEMS_DIR
