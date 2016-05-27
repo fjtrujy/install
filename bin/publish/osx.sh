@@ -48,6 +48,10 @@ validate_cmd $? "copying Gemfile.OSX" 10
 cd "${SANDBOX}"
 GEMS_DIR=Gems
 
+info "Installing the Latest Lersion of Bundler"
+gem install bundler
+echo
+
 info "Installing Gems"
 bundle update
 echo
