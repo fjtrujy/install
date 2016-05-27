@@ -87,6 +87,8 @@ mkdir -p results
 #
 # Will have to rely on post-processing of results/cucumber.json
 calabash-sandbox <<EOF
-APP=./LPTestTarget.app cucumber --format pretty --format json -o results/cucumber.json
+APP=./LPTestTarget.app cucumber --format pretty --format json -o results/cucumber.json 2>&1 | tee stdout.log
+echo $? > exit_code.log
 exit
 EOF
+
