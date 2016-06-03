@@ -17,7 +17,7 @@ The sandbox is not officially supported on other OS versions.
 
 ### Installation
 
-See System Requirements above
+See [System Requirements](https://github.com/calabash/install#system-requirements) above.
 
 ##### OSX
 ```shell
