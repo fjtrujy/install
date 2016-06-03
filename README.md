@@ -6,9 +6,18 @@ has everything you need to start exploring Calabash and running tests right away
 The sandbox is configured with the same version of Ruby running on Xamarin's
 Test Cloud, so you don't need to worry about ruby compatibilities.
 
+## System Requirements
+
+Calabash Sandbox requires one of the following operating systems:
+- OSX Yosemite
+- OSX El Capitan 
+- Windows 10
+
+The sandbox is not officially supported on other OS versions. 
+
 ### Installation
 
-Requires OSX Yosemite, El Capitan, or Windows 10.
+See System Requirements above
 
 ##### OSX
 ```shell
