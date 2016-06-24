@@ -37,7 +37,7 @@ info "Retrieving Gemfile"
 SANDBOX="${HOME}/.calabash/sandbox"
 
 if [ ! -d "${SANDBOX}" ]; then
-  error "Sandbox dir does note exist! Make sure you have a sandbox installation first." 11
+  error "Sandbox does not exist! Make sure you have a sandbox installation first." 11
 fi
 
 info "Updating Gemfile and Gemfile.lock"
