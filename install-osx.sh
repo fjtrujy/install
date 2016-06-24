@@ -32,9 +32,10 @@ mkdir -p "${HOME}/.calabash/sandbox/Rubies"
 #Download Ruby
 echo "Preparing Ruby ${CALABASH_RUBY_VERSION}..."
 
+URL="https://s3-eu-west-1.amazonaws.com/calabash-files/${CALABASH_RUBY_VERSION}.zip"
 curl -o \
   "${CALABASH_RUBY_VERSION}.zip" \
-  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/${CALABASH_RUBY_VERSION}.zip
+  --progress-bar "${URL}"
 
 unzip -qo "${CALABASH_RUBY_VERSION}.zip" -d "${CALABASH_RUBIES_HOME}"
 rm "${CALABASH_RUBY_VERSION}.zip"
