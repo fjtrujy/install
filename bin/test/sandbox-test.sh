@@ -31,7 +31,7 @@ set -e
 
 IOS_EXPECTED_VERSION="0.19.1"
 DROID_EXPECTED_VERSION="0.7.3"
-XTC_EXPECTED_VERSION="2.0.0.pre5"
+XTC_EXPECTED_VERSION="2.0.0"
 
 DROID=$( { echo "calabash-android version >&2" |  calabash-sandbox 1>/dev/null; } 2>&1)
 IOS=$( { echo "calabash-ios version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
