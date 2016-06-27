@@ -37,7 +37,7 @@ info "Retrieving Gemfile"
 SANDBOX="${HOME}/.calabash/sandbox"
 
 if [ ! -d "${SANDBOX}" ]; then
-  error "Sandbox dir does note exist! Make sure you have a sandbox installation first." 11
+  error "Sandbox does not exist! Make sure you have a sandbox installation first." 11
 fi
 
 info "Updating Gemfile and Gemfile.lock"
@@ -48,12 +48,15 @@ validate_cmd $? "copying Gemfile.OSX" 10
 cd "${SANDBOX}"
 GEMS_DIR=Gems
 
-info "Installing the Latest Lersion of Bundler"
-gem install bundler
+# We need a clean install
+rm -rf "${GEMS_DIR}"
+
+info "Installing the latest version of bundler"
+GEM_HOME="${GEMS_DIR}" GEM_PATH="${GEMS_DIR}" gem install bundler
 echo
 
 info "Installing Gems"
-bundle update
+GEM_HOME="${GEMS_DIR}" GEM_PATH="${GEMS_DIR}" bundle update
 echo
 
 info "Done! Now the sandbox contains:"
@@ -65,6 +68,7 @@ version "  calabash-android" $DROID
 version "xamarin-test-cloud" $XTC
 
 info "Zipping Gems"
+rm -rf CalabashGems.zip
 zip -qr CalabashGems.zip $GEMS_DIR
 validate_cmd $? "zipping gems" 4
 

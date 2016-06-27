@@ -32,9 +32,10 @@ mkdir -p "${HOME}/.calabash/sandbox/Rubies"
 #Download Ruby
 echo "Preparing Ruby ${CALABASH_RUBY_VERSION}..."
 
+URL="https://s3-eu-west-1.amazonaws.com/calabash-files/${CALABASH_RUBY_VERSION}.zip"
 curl -o \
   "${CALABASH_RUBY_VERSION}.zip" \
-  --progress-bar https://s3-eu-west-1.amazonaws.com/calabash-files/${CALABASH_RUBY_VERSION}.zip
+  --progress-bar "${URL}"
 
 unzip -qo "${CALABASH_RUBY_VERSION}.zip" -d "${CALABASH_RUBIES_HOME}"
 rm "${CALABASH_RUBY_VERSION}.zip"
@@ -59,7 +60,7 @@ rm "CalabashGems.zip"
 echo "source 'https://rubygems.org'" > "${SANDBOX}/Gemfile"
 echo "gem 'calabash-cucumber', '>= 0.17.0', '< 1.0'" >> "${SANDBOX}/Gemfile"
 echo "gem 'calabash-android', '>= 0.5.15', '< 1.0'" >> "${SANDBOX}/Gemfile"
-echo "gem 'xamarin-test-cloud', '~> 1.0'" >> "${SANDBOX}/Gemfile"
+echo "gem 'xamarin-test-cloud', '~> 2.0'" >> "${SANDBOX}/Gemfile"
 
 #Download the Sandbox Script
 echo "Preparing sandbox..."
