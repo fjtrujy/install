@@ -46,8 +46,8 @@ When installation completes, you should see something like the following:
 
 ```shell
 Done! Installed:
-calabash-android:   0.5.15
-xamarin-test-cloud: 1.1.2
+calabash-android:   0.8.2
+xamarin-test-cloud: 2.0.2
 Execute 'calabash-sandbox' to get started!
 ```
 
