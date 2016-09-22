@@ -17,7 +17,7 @@ set powershellCommand=%powershellCommand:~0,4%
 set powershellUpdateCommand=%powershellUpdateCommand:~0,4%
 
 set CALABASH_SANDBOX=%USERPROFILE%\.calabash\sandbox
-set CALABASH_RUBY_VERSION=ruby-2.1.6-p336
+set CALABASH_RUBY_VERSION=ruby-2.3.1
 set CALABASH_RUBY_PATH=%CALABASH_SANDBOX%\Rubies\%CALABASH_RUBY_VERSION%\bin
 set CALABASH_GEM_HOME=%CALABASH_SANDBOX%\Gems
 
