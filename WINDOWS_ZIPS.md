@@ -16,6 +16,7 @@
         gem 'calabash-android', '>= 0.8.3', '< 1.0'
         gem 'xamarin-test-cloud', '~> 2.0'
 - `cd` into `%USERPROFILE%\.calabash\sandbox` and Run `bundle install`
+- Edit `%USERPROFILE%\.calabash\sandbox\Gems\bin\*.bat` replacing `C:\Users\<your user>\.calabash\sandbox\Rubies\ruby-2.3.1\bin\ruby.exe` with `ruby.exe`.
 - Zip `%USERPROFILE%\.calabash\sandbox\Rubies\ruby-2.3.1` into `ruby-2.3.1-win32.zip`
 - Zip `%USERPROFILE%\.calabash\sandbox\Gems` into `CalabashGems-win32.zip`
 - Upload both zip files to `https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/`
