@@ -13,7 +13,7 @@
 - Create a file named `Gemfile` in `%USERPROFILE%\.calabash\sandbox` with the contents:
 
         source 'https://rubygems.org'
-        gem 'calabash-android', '>= 0.8.3', '< 1.0'
+        gem 'calabash-android', '>= 0.8.2', '< 1.0'
         gem 'xamarin-test-cloud', '~> 2.0'
 - `cd` into `%USERPROFILE%\.calabash\sandbox` and Run `bundle install`
 - Edit `%USERPROFILE%\.calabash\sandbox\Gems\bin\*.bat` replacing `C:\Users\<your user>\.calabash\sandbox\Rubies\ruby-2.3.1\bin\ruby.exe` with `ruby.exe`.
