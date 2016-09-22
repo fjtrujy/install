@@ -30,7 +30,7 @@ $ErrorActionPreference = "Stop"
 
 $sandbox="${env:USERPROFILE}\.calabash\sandbox"
 $calabashRubiesHome="${sandbox}\Rubies"
-$calabashRubyVersion="ruby-2.1.6-p336"
+$calabashRubyVersion="ruby-2.3.1"
 $calabashRubyPath="${calabashRubiesHome}\${calabashRubyVersion}\bin"
 $calabashSandboxBin="${sandbox}\bin"
 $calabashSandboxBat="${calabashSandboxBin}\calabash-sandbox.bat"
