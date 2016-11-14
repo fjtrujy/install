@@ -23,15 +23,29 @@ cp ./install-osx.sh "${TMP_DIR}"
 
 cp -r bin/test/cucumber "${TMP_DIR}"
 
+GEMFILE="${PWD}/Gemfile.OSX"
+
 cd "${TMP_DIR}"
 
 set -e
 
 ./install-osx.sh
 
-IOS_EXPECTED_VERSION="0.19.2"
-DROID_EXPECTED_VERSION="0.7.3"
-XTC_EXPECTED_VERSION="2.0.0"
+# $1 variable to store the version in
+# $2 the gem version to extract
+function extract_version {
+  VERSION=`grep "${2}" "${GEMFILE}" | \
+    egrep -o "([0-9]+([.][0-9]+)+)" | \
+    head -1 | tr -d '\n'`
+  eval "$1=\"${VERSION}\""
+}
+
+IOS_EXPECTED_VERSION=""
+extract_version IOS_EXPECTED_VERSION "calabash-cucumber"
+DROID_EXPECTED_VERSION=""
+extract_version DROID_EXPECTED_VERSION "calabash-android"
+XTC_EXPECTED_VERSION=""
+extract_version XTC_EXPECTED_VERSION "xamarin-test-cloud"
 
 DROID=$( { echo "calabash-android version >&2" |  calabash-sandbox 1>/dev/null; } 2>&1)
 IOS=$( { echo "calabash-ios version >&2" | calabash-sandbox 1>/dev/null; } 2>&1)
