@@ -22,6 +22,6 @@
 - Zip `%USERPROFILE%\.calabash\sandbox\Rubies\ruby-2.3.1` into `ruby-2.3.1-win32.zip`
 - Zip `%USERPROFILE%\.calabash\sandbox\Gems` into `CalabashGems-win32.zip`
 - Upload both zip files to `https://s3-eu-west-1.amazonaws.com/calabash-files/calabash-sandbox/windows/`
-
+- Ensure the zip files you've uploaded have been made public
 
  
