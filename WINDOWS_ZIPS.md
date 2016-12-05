@@ -7,8 +7,10 @@
 - Run `calabash-sandbox`
 - `cd` into `c:\DevKit`
 - Run `ruby dk.rb init`
-- Edit `c:\DevKit\config.yml` replacing `C:/Ruby21` with the folder that Ruby was copied into - something like `C:\Users\<your user>\.calabash\sandbox\Rubies\ruby-2.3.1`.
+- Edit `c:\DevKit\config.yml` replacing `C:/Ruby23` with the folder that Ruby was copied into - something like `C:\Users\<your user>\.calabash\sandbox\Rubies\ruby-2.3.1`.
 - Run `ruby dk.rb install`
+- Download the latest rubygems from https://rubygems.org/pages/download
+- Update rubygems following the instructions at http://guides.rubygems.org/ssl-certificate-update/#installing-using-update-packages
 - Run `gem install bundler`
 - Create a file named `Gemfile` in `%USERPROFILE%\.calabash\sandbox` with the contents:
 
