@@ -1,0 +1,11 @@
+1. Comment out the lines in `install-osx.sh` which download and unzip the ruby and gem zips.
+- Run `install-osx.sh`, ignoring the error about `calabash-ios`, `calabash-android` and `xamarin-test-cloud` not being found.  This creates the sandbox folders and installs the `calabash-sandbox` script.
+- Install `ruby-build` if necessary (`brew install ruby-build`).
+- Execute `ruby-build 2.3.1 ~/.calabash/sandbox/Rubies/2.3.1`.
+- Edit `~/.calabash/sandbox/Rubies/2.3.1/bin/*` replacing `#!/Users/<your user>/.calabash/sandbox/Rubies/2.3.1/bin/ruby` with `/usr/bin/env ruby`.
+- Execute `calabash-sandbox`
+- Execute `gem install bundler`
+- `cd` into `~/.calabash/sandbox` and execute `bundle install`
+- Execute `zip -r CalabashGems.zip Gems`
+- `cd` into `Rubies` and execute `zip -r 2.3.1.zip 2.3.1`
+- Upload both zip files to `https://s3-eu-west-1.amazonaws.com/calabash-files/` ensuring that you select `Make everything public`
